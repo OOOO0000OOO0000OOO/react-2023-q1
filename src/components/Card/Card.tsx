@@ -6,7 +6,7 @@ export default class Card extends Component<CardData> {
     const { imageUrl, name, types, supertype }: CardData = this.props;
 
     return (
-      <div>
+      <div data-testid="card">
         <img src={imageUrl} alt={name}></img>
         <h3>{name}</h3>
         <p>{supertype}</p>

@@ -15,7 +15,7 @@ export default class CardsList extends Component<Props> {
     return (
       <div>
         {error ? (
-          <div>Error: {error.message}</div>
+          <div data-testid="error">Error: {error.message}</div>
         ) : (
           cards
             .filter((card: CardData) =>
