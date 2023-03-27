@@ -39,9 +39,30 @@ const mockCard = {
 };
 
 describe('Card', () => {
-  it('should be render', () => {
+  it('should be in the document', () => {
     render(<Card {...mockCard} />);
 
-    expect(screen.getByTestId('card')).toBeDefined();
+    expect(screen.getByTestId('card')).toBeInTheDocument();
+  });
+
+  it('should render the card data', () => {
+    const { getByRole, getByText } = render(<Card {...mockCard} />);
+
+    expect(screen.getByTestId('card')).toBeInTheDocument();
+
+    expect(getByRole('img').getAttribute('src')).toBe(mockCard.imageUrl);
+    expect(getByRole('heading').textContent).toBe(mockCard.name);
+
+    expect(getByText(mockCard.supertype)).toBeInTheDocument();
+    expect(getByText(mockCard.types.join(' · '))).toBeInTheDocument();
+  });
+
+  it('should not show types div if types array is empty', () => {
+    const { getByTestId } = render(<Card {...{ ...mockCard, types: [] }} />);
+    const cardElement = getByTestId('card');
+    const divElement = getByTestId('types');
+
+    expect(cardElement).toBeInTheDocument();
+    expect(divElement).toHaveTextContent('');
   });
 });
