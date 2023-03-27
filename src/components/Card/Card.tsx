@@ -10,7 +10,7 @@ export default class Card extends Component<CardData> {
         <img src={imageUrl} alt={name}></img>
         <h3>{name}</h3>
         <p>{supertype}</p>
-        {types && <div>{types.join(' · ')}</div>}
+        {types && <div data-testid="types">{types.join(' · ')}</div>}
       </div>
     );
   }
