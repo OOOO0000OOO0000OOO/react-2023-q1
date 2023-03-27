@@ -1,7 +1,29 @@
 import React, { Component } from 'react';
+import Card from '../../components/Card/Card';
+import { CardData } from '../../models/interfaces';
 
-export default class CardsList extends Component {
+interface Props {
+  cards: CardData[];
+  searchQuery: string;
+  error: Error | null;
+}
+
+export default class CardsList extends Component<Props> {
   render() {
-    return <div>CardList</div>;
+    const { cards, searchQuery, error } = this.props;
+
+    return (
+      <div>
+        {error ? (
+          <div>Error: {error.message}</div>
+        ) : (
+          cards
+            .filter((card: CardData) =>
+              card.name.toLowerCase().includes(searchQuery.toLowerCase())
+            )
+            .map((card: CardData) => <Card key={card.id} {...card} />)
+        )}
+      </div>
+    );
   }
 }
