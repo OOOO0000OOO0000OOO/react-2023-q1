@@ -28,7 +28,15 @@ const mockUserCards: UserCardData[] = [
 ];
 
 describe('UserCardsList component', () => {
-  global.URL.createObjectURL = vi.fn(() => 'image.png');
+  const { createObjectURL } = global.URL;
+
+  beforeAll(() => {
+    global.URL.createObjectURL = vi.fn(() => 'image.png');
+  });
+
+  afterAll(() => {
+    global.URL.createObjectURL = createObjectURL;
+  });
 
   it('should render list of usercards correctly', () => {
     const { getByText } = render(<UserCardsList cards={mockUserCards} />);

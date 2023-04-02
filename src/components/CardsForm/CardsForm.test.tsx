@@ -37,8 +37,11 @@ describe('CardForm component', () => {
 
     fireEvent.click(consentInput);
     fireEvent.click(typeTrainerInput);
-    userEvent.selectOptions(attackInput, mockCardData.attack);
-    await userEvent.upload(imageInput, mockCardData.image).then(() => {
+
+    await userEvent.selectOptions(attackInput, mockCardData.attack);
+    await userEvent.upload(imageInput, mockCardData.image);
+
+    await waitFor(() => {
       fireEvent.submit(screen.getByTestId('card-form'));
     });
   });
@@ -47,20 +50,20 @@ describe('CardForm component', () => {
     expect(screen.getByTestId('card-form')).toBeInTheDocument();
   });
 
-  it('should submit user card data on submit', () => {
-    waitFor(() => {
+  it('should submit user card data on submit', async () => {
+    await waitFor(() => {
       expect(onSubmit).toHaveBeenCalledWith(mockCardData);
     });
   });
 
-  it('should reset the form on submit', () => {
+  it('should reset the form on submit', async () => {
     const nameInput = screen.getByLabelText<HTMLInputElement>(/name/i);
     const dateInput = screen.getByLabelText<HTMLInputElement>(/date/i);
     const emailInput = screen.getByLabelText<HTMLSelectElement>(/email/i);
     const consentInput = screen.getByLabelText<HTMLInputElement>(/consent/i);
     const imageInput = screen.getByLabelText<HTMLInputElement>(/image/i);
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(nameInput.value).toBe('');
       expect(emailInput.value).toBe('');
       expect(dateInput.value).toBe('');

@@ -14,7 +14,15 @@ const mockUserCard = {
 } as const;
 
 describe('UserCard component', () => {
-  global.URL.createObjectURL = vi.fn(() => 'image.png');
+  const { createObjectURL } = global.URL;
+
+  beforeAll(() => {
+    global.URL.createObjectURL = vi.fn(() => 'image.png');
+  });
+
+  afterAll(() => {
+    global.URL.createObjectURL = createObjectURL;
+  });
 
   it('should be in the document', () => {
     render(<UserCard {...mockUserCard} />);
