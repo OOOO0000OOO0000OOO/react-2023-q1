@@ -17,7 +17,7 @@ export const attacks = [
 
 export type Attack = (typeof attacks)[number];
 
-export interface UserData {
+export interface UserCardData {
   id: string;
   name?: string;
   level?: string;

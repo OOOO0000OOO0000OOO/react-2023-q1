@@ -1,12 +1,12 @@
 import React, { Component, FormEvent } from 'react';
-import { attacks, UserData } from '../../models/FormData';
+import { attacks, UserCardData } from '../../models/UserCardData';
 
 interface CardFormProps {
-  onSubmit: (value: UserData) => void;
+  onSubmit: (value: UserCardData) => void;
 }
 
 interface CardFormState {
-  formData: UserData;
+  userCardData: UserCardData;
 }
 
 class CardForm extends Component<CardFormProps, CardFormState> {
@@ -34,9 +34,9 @@ class CardForm extends Component<CardFormProps, CardFormState> {
     event.preventDefault();
 
     const { onSubmit } = this.props;
-    const { formData } = this.state;
+    const { userCardData } = this.state;
 
-    onSubmit(formData);
+    onSubmit(userCardData);
   };
 
   render() {

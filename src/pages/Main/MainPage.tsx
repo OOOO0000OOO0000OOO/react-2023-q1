@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import CardsList from '../../components/CardList/CardList';
 import SearchBar from '../../components/SearchBar/SearchBar';
-import { CardData } from '../../models/interfaces';
+import { CardData } from '../../models/CardData';
 
 interface State {
   searchQuery: string;

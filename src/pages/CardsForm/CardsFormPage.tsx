@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import CardsForm from '../../components/CardsForm/CardsForm';
-import { UserData } from '../../models/FormData';
+import { UserCardData } from '../../models/UserCardData';
 
 interface State {
-  cards: UserData[];
+  cards: UserCardData[];
 }
 export default class CardsFormPage extends Component {
   state: State = {
     cards: [],
   };
 
-  addCard = (card: UserData) => {
+  addCard = (card: UserCardData) => {
     this.setState(({ cards }: State) => ({
       cards: [...cards, card],
     }));
