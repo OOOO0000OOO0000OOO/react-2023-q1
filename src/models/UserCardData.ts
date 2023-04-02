@@ -17,12 +17,26 @@ export const attacks = [
 
 export type Attack = (typeof attacks)[number];
 
+export const types = ['pokemon', 'trainer', 'energy'] as const;
+
+export type Type = (typeof types)[number];
+
 export interface UserCardData {
   id: number;
   name?: string;
   date?: string;
   attack?: Attack;
-  type?: 'pokemon' | 'trainer' | 'energy';
+  type?: Type;
   image?: string;
   consent?: boolean;
 }
+
+export const initialState: UserCardData = {
+  id: 0,
+  name: '',
+  date: '',
+  attack: 'Draining Kiss',
+  type: 'pokemon',
+  image: '',
+  consent: false,
+} as const;
