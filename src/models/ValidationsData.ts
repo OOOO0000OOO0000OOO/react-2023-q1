@@ -28,6 +28,16 @@ export const validations: {
       message: 'name must contain at least 3 characters',
     },
   },
+  email: {
+    required: {
+      isValid: (input) => Boolean(input && input.value.trim().length),
+      message: 'email required',
+    },
+    custom: {
+      isValid: (input) => Boolean(input && /\S+@\S+\.\S+/.test(input.value)),
+      message: 'invalid email format',
+    },
+  },
   date: {
     required: {
       isValid: (input) => Boolean(input && input.value.trim().length),

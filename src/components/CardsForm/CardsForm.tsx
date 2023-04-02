@@ -12,6 +12,7 @@ import { Validations, validations } from '../../models/ValidationsData';
 import AttackInput from './AttackInput';
 import ConsentInput from './ConsentInput';
 import DateInput from './DateInput';
+import EmailInput from './EmailInput';
 import ImageInput from './ImageInput';
 import NameInput from './NameInput';
 import TypeInput from './TypeInput';
@@ -37,6 +38,7 @@ class CardForm extends Component<CardFormProps, CardFormState> {
     energy: React.createRef<HTMLInputElement>(),
   };
   private image: RefObject<HTMLInputElement> = React.createRef();
+  private email: RefObject<HTMLInputElement> = React.createRef();
 
   readonly state: CardFormState = {
     userCardData: initialState,
@@ -120,6 +122,7 @@ class CardForm extends Component<CardFormProps, CardFormState> {
     return (
       <form ref={this.form} onSubmit={this.handleSubmit}>
         <NameInput errors={errors} name={this.name} />
+        <EmailInput errors={errors} email={this.email} />
         <DateInput errors={errors} date={this.date} />
         <AttackInput attacksList={attacks} attacks={this.attack} />
         <TypeInput type={this.type} />
