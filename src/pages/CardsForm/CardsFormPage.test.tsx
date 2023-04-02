@@ -12,15 +12,15 @@ describe('CardsFormPage', () => {
     image: new File(['image'], 'image.png'),
   } as const;
 
-  beforeEach(() => {
-    render(<CardsFormPage />);
-  });
-
   it('should render a UserCardsList component', () => {
+    render(<CardsFormPage />);
+
     expect(screen.getByTestId('user-cards-list')).toBeInTheDocument();
   });
 
   it('should draw an user card on form submit', () => {
+    render(<CardsFormPage />);
+
     const nameInput = screen.getByLabelText<HTMLInputElement>(/name/i);
     const emailInput = screen.getByLabelText<HTMLInputElement>(/email/i);
     const dateInput = screen.getByLabelText<HTMLInputElement>(/date/i);
@@ -33,13 +33,9 @@ describe('CardsFormPage', () => {
     dateInput.value = mockCardData.date;
     consentInput.checked = true;
 
-    userEvent
-      .upload(imageInput, mockCardData.image)
-      .then(() => {
-        fireEvent.click(submitButton);
-      })
-      .then(() => {
-        expect(screen.getByTestId('user-cards-list').children.length).toBe(1);
-      });
+    userEvent.upload(imageInput, mockCardData.image).then(() => {
+      fireEvent.click(submitButton);
+      expect(screen.getByTestId('user-cards-list').children.length).toBe(1);
+    });
   });
 });

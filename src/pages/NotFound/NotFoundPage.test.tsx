@@ -21,9 +21,6 @@ describe('NotFoundPage', () => {
   it('contains an image', () => {
     const { getByRole } = render(<NotFoundPage />);
     expect(getByRole('img')).toHaveAttribute('alt');
-    expect(getByRole('img')).toHaveAttribute(
-      'src',
-      'src/assets/pokemonsad.jpg'
-    );
+    expect(getByRole('img')).toHaveAttribute('src', '/pokemonsad.jpg');
   });
 });
