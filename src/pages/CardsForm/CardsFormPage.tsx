@@ -12,7 +12,7 @@ export default class CardsFormPage extends Component {
     cards: [],
   };
 
-  addCard = (card: UserCardData) => {
+  private addCard = (card: UserCardData) => {
     this.setState(({ cards }: State) => ({
       cards: [...cards, card],
     }));

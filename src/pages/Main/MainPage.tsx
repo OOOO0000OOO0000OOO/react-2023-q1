@@ -28,7 +28,7 @@ export default class MainPage extends Component {
     localStorage.setItem('search', this.state.searchQuery);
   }
 
-  onSearch = (searchQuery: string) => {
+  private onSearch = (searchQuery: string) => {
     this.setState({ searchQuery });
   };
 

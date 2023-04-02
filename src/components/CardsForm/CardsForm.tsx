@@ -44,7 +44,7 @@ class CardForm extends Component<CardFormProps, CardFormState> {
     submission: false,
   };
 
-  resetState = () => {
+  private resetState = (): void => {
     const { id } = this.state.userCardData;
 
     this.setState({
@@ -56,7 +56,7 @@ class CardForm extends Component<CardFormProps, CardFormState> {
     });
   };
 
-  updateState = async () => {
+  private updateState = async (): Promise<void> => {
     const { id } = this.state.userCardData;
 
     this.setState({
@@ -77,9 +77,9 @@ class CardForm extends Component<CardFormProps, CardFormState> {
     await this.validate(validations);
   };
 
-  validate = async (validations: {
+  private validate = async (validations: {
     [K in FormFields]: Validations;
-  }) => {
+  }): Promise<void> => {
     for (const field of formFields) {
       const { required, custom } = validations[field];
       const { errors } = this.state;
@@ -97,7 +97,7 @@ class CardForm extends Component<CardFormProps, CardFormState> {
     }
   };
 
-  handleSubmit = async (event: FormEvent) => {
+  private handleSubmit = async (event: FormEvent): Promise<void> => {
     event.preventDefault();
 
     await this.updateState();
