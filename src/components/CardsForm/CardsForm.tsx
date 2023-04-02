@@ -9,13 +9,9 @@ import {
 } from '../../models/UserCardData';
 import { FormFields, formFields } from '../../models/FormData';
 import { Validations, validations } from '../../models/ValidationsData';
-import AttackInput from './AttackInput';
-import ConsentInput from './ConsentInput';
-import DateInput from './DateInput';
-import EmailInput from './EmailInput';
-import ImageInput from './ImageInput';
-import NameInput from './NameInput';
+import UserSelect from './UserSelect';
 import TypeInput from './TypeInput';
+import UserInput from './UserInput';
 import styles from './CardsForm.module.css';
 
 interface CardFormProps {
@@ -136,13 +132,50 @@ class CardForm extends Component<CardFormProps, CardFormState> {
         onSubmit={this.handleSubmit}
         className={styles.formContainer}
       >
-        <NameInput errors={errors} name={this.name} />
-        <EmailInput errors={errors} email={this.email} />
-        <DateInput errors={errors} date={this.date} />
-        <AttackInput attacksList={attacks} attacks={this.attack} />
-        <TypeInput type={this.type} />
-        <ImageInput errors={errors} image={this.image} />
-        <ConsentInput errors={errors} consent={this.consent} />
+        <UserInput
+          label="name:"
+          errors={errors}
+          name="name"
+          inputRef={this.name}
+        />
+        <UserInput
+          label="email:"
+          errors={errors}
+          name="email"
+          inputRef={this.email}
+        />
+        <UserInput
+          label="date:"
+          type="date"
+          errors={errors}
+          name="date"
+          inputRef={this.date}
+        />
+        <UserSelect label="attack:" options={attacks} selectRef={this.attack} />
+        <TypeInput
+          label="type:"
+          types={{
+            pokemon: this.type.pokemon,
+            trainer: this.type.trainer,
+            energy: this.type.energy,
+          }}
+          defaultChecked="pokemon"
+        />
+        <UserInput
+          label="image:"
+          type="file"
+          accept="image/*"
+          errors={errors}
+          name="image"
+          inputRef={this.image}
+        />
+        <UserInput
+          label="I consent to my personal data:"
+          type="checkbox"
+          errors={errors}
+          name="consent"
+          inputRef={this.consent}
+        />
         <button type="submit">Submit</button>
         {submission && (
           <span className={styles.message}>successfully submitted!</span>

@@ -2,35 +2,33 @@ import React, { Component } from 'react';
 import styles from './CardsForm.module.css';
 
 export default class TypeInput extends Component<{
-  type: {
-    pokemon: React.RefObject<HTMLInputElement>;
-    trainer: React.RefObject<HTMLInputElement>;
-    energy: React.RefObject<HTMLInputElement>;
+  label: string;
+  types: {
+    [value in string]: React.RefObject<HTMLInputElement>;
   };
+  defaultChecked: string;
 }> {
   render() {
-    const { type } = this.props;
+    const { label, types, defaultChecked } = this.props;
     return (
       <div className={styles.label}>
-        type:
-        <label>
-          <input
-            type="radio"
-            name="radio"
-            value="pokemon"
-            ref={type.pokemon}
-            defaultChecked
-          />
-          pokemon
-        </label>
-        <label>
-          <input type="radio" name="radio" value="trainer" ref={type.energy} />
-          trainer
-        </label>
-        <label>
-          <input type="radio" name="radio" value="energy" ref={type.trainer} />
-          energy
-        </label>
+        {label}
+        {Object.keys(types).map((value) => {
+          const radioRef = types[value];
+
+          return (
+            <label key={value}>
+              {value}
+              <input
+                type="radio"
+                name="radio"
+                value={value}
+                ref={radioRef}
+                defaultChecked={value === defaultChecked}
+              />
+            </label>
+          );
+        })}
       </div>
     );
   }
