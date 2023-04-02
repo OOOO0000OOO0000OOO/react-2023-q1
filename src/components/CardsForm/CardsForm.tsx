@@ -25,6 +25,7 @@ interface CardFormProps {
 interface CardFormState {
   userCardData: UserCardData;
   errors: { [K in FormFields]?: string };
+  submission: boolean;
 }
 
 class CardForm extends Component<CardFormProps, CardFormState> {
@@ -44,6 +45,7 @@ class CardForm extends Component<CardFormProps, CardFormState> {
   readonly state: CardFormState = {
     userCardData: initialState,
     errors: {},
+    submission: false,
   };
 
   resetState = () => {
@@ -107,7 +109,9 @@ class CardForm extends Component<CardFormProps, CardFormState> {
     const { onSubmit, onSuccess } = this.props;
     const { userCardData, errors } = this.state;
 
-    if (!Object.values(errors).find(Boolean)) {
+    const submission = !Object.values(errors).find(Boolean);
+
+    if (submission) {
       onSubmit(userCardData);
 
       this.form.current?.reset();
@@ -116,11 +120,13 @@ class CardForm extends Component<CardFormProps, CardFormState> {
       if (this.image.current) this.image.current.value = '';
     }
 
+    this.setState({ submission });
+
     if (onSuccess) onSuccess(userCardData);
   };
 
   render() {
-    const { errors } = this.state;
+    const { errors, submission } = this.state;
 
     return (
       <form
@@ -136,6 +142,7 @@ class CardForm extends Component<CardFormProps, CardFormState> {
         <ImageInput errors={errors} image={this.image} />
         <ConsentInput errors={errors} consent={this.consent} />
         <button type="submit">Submit</button>
+        {submission && <span>successfully submitted!</span>}
       </form>
     );
   }
