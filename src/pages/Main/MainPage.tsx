@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import CardsList from '../../components/CardList/CardList';
 import SearchBar from '../../components/SearchBar/SearchBar';
-import { CardData } from '../../models/interfaces';
+import { CardData } from '../../models/CardData';
+import styles from './MainPage.module.css';
+import { fetchCards } from '../../api/fetchCards';
 
 interface State {
   searchQuery: string;
@@ -17,8 +19,7 @@ export default class MainPage extends Component {
   };
 
   componentDidMount() {
-    fetch('https://api.pokemontcg.io/v1/cards')
-      .then((response) => response.json())
+    fetchCards()
       .then(({ cards }) => this.setState({ cards }))
       .catch((error: Error) => this.setState({ error }));
   }
@@ -27,15 +28,15 @@ export default class MainPage extends Component {
     localStorage.setItem('search', this.state.searchQuery);
   }
 
-  onSearch = (searchQuery: string) => {
+  private onSearch = (searchQuery: string) => {
     this.setState({ searchQuery });
   };
 
   render() {
     const { searchQuery } = this.state;
     return (
-      <div>
-        <h3>Pokémon Cards</h3>
+      <div className={styles.mainContainer}>
+        <h3 className={styles.heading}>Pokémon Cards</h3>
         <SearchBar searchQuery={searchQuery} onSearch={this.onSearch} />
         <CardsList {...this.state} />
       </div>

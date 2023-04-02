@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import Card from '../../components/Card/Card';
-import { CardData } from '../../models/interfaces';
+import Card from '../Card/Card';
+import { CardData } from '../../models/CardData';
+import styles from './CardList.module.css';
 
 interface Props {
   cards: CardData[];
@@ -13,7 +14,7 @@ export default class CardsList extends Component<Props> {
     const { cards, searchQuery, error } = this.props;
 
     return (
-      <div>
+      <div className={styles.cardList}>
         {error ? (
           <div data-testid="error">Error: {error.message}</div>
         ) : (

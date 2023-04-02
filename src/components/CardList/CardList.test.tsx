@@ -2,7 +2,7 @@ import React from 'react';
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import CardsList from './CardList';
-import { CardData } from '../../models/interfaces';
+import { CardData } from '../../models/CardData';
 
 const mockCards: CardData[] = [
   {
@@ -27,8 +27,8 @@ describe('CardsList component', () => {
       <CardsList cards={mockCards} searchQuery="" error={null} />
     );
 
-    expect(getByText('Card One')).toBeDefined();
-    expect(getByText('Card Two')).toBeDefined();
+    expect(getByText('Card One')).toBeInTheDocument();
+    expect(getByText('Card Two')).toBeInTheDocument();
   });
 
   it('should filter cards based on search query', () => {
@@ -36,7 +36,7 @@ describe('CardsList component', () => {
       <CardsList cards={mockCards} searchQuery="one" error={null} />
     );
 
-    expect(getByText('Card One')).toBeDefined();
+    expect(getByText('Card One')).toBeInTheDocument();
     expect(queryByText('Card Two')).toBeNull();
   });
 
@@ -44,7 +44,7 @@ describe('CardsList component', () => {
     const error = new Error('Network Error');
     render(<CardsList cards={[]} searchQuery="" error={error} />);
 
-    expect(screen.getByTestId('error')).toBeDefined();
+    expect(screen.getByTestId('error')).toBeInTheDocument();
     expect(screen.getByTestId('error').textContent).toEqual(
       `Error: ${error.message}`
     );

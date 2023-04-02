@@ -1,19 +1,22 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+import styles from './Header.module.css';
 
 export class Header extends Component {
   render() {
-    const linkStyle = ({ isActive }: { isActive: boolean }) => ({
-      color: isActive ? 'darkcyan' : 'black',
-    });
+    const linkStyle = ({ isActive }: { isActive: boolean }) =>
+      `${styles.link} ${isActive ? styles.linkActive : ''}`;
 
     return (
-      <header>
-        <NavLink to="/about" style={linkStyle}>
+      <header className={styles.header}>
+        <NavLink to="/" className={linkStyle}>
+          Cards
+        </NavLink>
+        <NavLink to="/about" className={linkStyle}>
           About
         </NavLink>
-        <NavLink to="/" style={linkStyle}>
-          Home
+        <NavLink to="/forms" className={linkStyle}>
+          Create Card
         </NavLink>
       </header>
     );

@@ -13,14 +13,12 @@ describe('Header component', () => {
     );
 
     const aboutLink = screen.getByRole('link', { name: /about/i });
-    const homeLink = screen.getByRole('link', { name: /home/i });
+    const homeLink = screen.getByRole('link', { name: /cards/i });
 
-    expect(aboutLink.style.color).toBe('black');
-    expect(homeLink.style.color).toBe('darkcyan');
+    expect(homeLink.className).contain('linkActive');
 
     fireEvent.click(aboutLink);
 
-    expect(aboutLink.style.color).toBe('darkcyan');
-    expect(homeLink.style.color).toBe('black');
+    expect(aboutLink.className).contain('linkActive');
   });
 });

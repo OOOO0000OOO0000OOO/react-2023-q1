@@ -1,0 +1,13 @@
+.userCard {
+  border: 0.2px solid gray;
+  border-radius: 5px;
+  padding: 10px;
+  width: 150px;
+  height: 200px;
+}
+
+.userImage {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+}

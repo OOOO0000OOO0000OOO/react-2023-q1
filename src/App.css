@@ -1,0 +1,14 @@
+@font-face {
+  font-family: 'pokesolid';
+  src: url('/fonts/Pokemon\ Solid.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'pokehollow';
+  src: url('/fonts/Pokemon\ Hollow.ttf') format('truetype');
+}
+
+* {
+  margin: 0;
+  font-family: monospace;
+}

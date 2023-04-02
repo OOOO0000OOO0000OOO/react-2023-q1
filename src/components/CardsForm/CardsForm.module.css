@@ -1,0 +1,26 @@
+.formContainer {
+  position: relative;
+  width: 60%;
+  max-width: 250px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+.label {
+  display: flex;
+  justify-content: space-between;
+}
+
+.error {
+  color: tomato;
+  position: absolute;
+  left: calc(100% + 20px);
+  width: 100%;
+}
+
+.message {
+  position: absolute;
+  bottom: -10px;
+}

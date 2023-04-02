@@ -14,11 +14,11 @@ export default class SearchBar extends Component<Props, State> {
     searchQuery: this.props.searchQuery,
   };
 
-  onChange = (e: ChangeEvent<HTMLInputElement>) => {
+  private onChange = (e: ChangeEvent<HTMLInputElement>) => {
     this.setState({ searchQuery: e.target.value });
   };
 
-  onSubmit = (e: FormEvent) => {
+  private onSubmit = (e: FormEvent) => {
     e.preventDefault();
     this.props.onSearch(this.state.searchQuery);
   };
