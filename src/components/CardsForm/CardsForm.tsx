@@ -16,7 +16,6 @@ import styles from './CardsForm.module.css';
 
 interface CardFormProps {
   onSubmit: (value: UserCardData) => void;
-  onSuccess?: (value: unknown) => void;
 }
 
 interface CardFormState {
@@ -103,7 +102,7 @@ class CardForm extends Component<CardFormProps, CardFormState> {
 
     await this.updateState();
 
-    const { onSubmit, onSuccess } = this.props;
+    const { onSubmit } = this.props;
     const { userCardData, errors } = this.state;
 
     const submission = !Object.values(errors).find(Boolean);
@@ -118,8 +117,6 @@ class CardForm extends Component<CardFormProps, CardFormState> {
     }
 
     this.setState({ submission });
-
-    if (onSuccess) onSuccess(userCardData);
   };
 
   render() {
