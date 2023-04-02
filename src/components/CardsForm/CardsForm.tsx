@@ -16,6 +16,7 @@ import EmailInput from './EmailInput';
 import ImageInput from './ImageInput';
 import NameInput from './NameInput';
 import TypeInput from './TypeInput';
+import styles from './CardsForm.module.css';
 
 interface CardFormProps {
   onSubmit: (value: UserCardData) => void;
@@ -133,6 +134,7 @@ class CardForm extends Component<CardFormProps, CardFormState> {
         data-testid="card-form"
         ref={this.form}
         onSubmit={this.handleSubmit}
+        className={styles.formContainer}
       >
         <NameInput errors={errors} name={this.name} />
         <EmailInput errors={errors} email={this.email} />
@@ -142,7 +144,9 @@ class CardForm extends Component<CardFormProps, CardFormState> {
         <ImageInput errors={errors} image={this.image} />
         <ConsentInput errors={errors} consent={this.consent} />
         <button type="submit">Submit</button>
-        {submission && <span>successfully submitted!</span>}
+        {submission && (
+          <span className={styles.message}>successfully submitted!</span>
+        )}
       </form>
     );
   }

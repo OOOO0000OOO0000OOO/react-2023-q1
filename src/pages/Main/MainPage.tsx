@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import CardsList from '../../components/CardList/CardList';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import { CardData } from '../../models/CardData';
+import styles from './MainPage.module.css';
 
 interface State {
   searchQuery: string;
@@ -34,8 +35,8 @@ export default class MainPage extends Component {
   render() {
     const { searchQuery } = this.state;
     return (
-      <div>
-        <h3>Pokémon Cards</h3>
+      <div className={styles.mainContainer}>
+        <h3 className={styles.heading}>Pokémon Cards</h3>
         <SearchBar searchQuery={searchQuery} onSearch={this.onSearch} />
         <CardsList {...this.state} />
       </div>

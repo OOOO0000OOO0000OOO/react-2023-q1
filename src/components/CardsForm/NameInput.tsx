@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styles from './CardsForm.module.css';
 
 export default class NameInput extends Component<{
   errors: { name?: string };
@@ -7,10 +8,10 @@ export default class NameInput extends Component<{
   render() {
     const { errors, name } = this.props;
     return (
-      <label>
+      <label className={styles.label}>
         name:
         <input type="text" name="name" ref={name} />
-        {errors.name && <span className="error-message">{errors.name}</span>}
+        {errors.name && <span className={styles.error}>{errors.name}</span>}
       </label>
     );
   }

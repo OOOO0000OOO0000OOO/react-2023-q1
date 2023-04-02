@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styles from './CardsForm.module.css';
 
 export default class ImageInput extends Component<{
   errors: { image?: string };
@@ -7,10 +8,10 @@ export default class ImageInput extends Component<{
   render() {
     const { errors, image } = this.props;
     return (
-      <label>
+      <label className={styles.label}>
         image:
         <input type="file" accept="image/*" name="image" ref={image} />
-        {errors.image && <span className="error-message">{errors.image}</span>}
+        {errors.image && <span className={styles.error}>{errors.image}</span>}
       </label>
     );
   }

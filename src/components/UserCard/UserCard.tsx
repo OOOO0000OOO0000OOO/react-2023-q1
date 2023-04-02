@@ -1,17 +1,22 @@
 import React, { Component } from 'react';
 import { UserCardData } from '../../models/UserCardData';
+import styles from './UserCard.module.css';
 
 export default class UserCard extends Component<UserCardData> {
   render() {
     const { name, date, attack, type, image } = this.props;
 
     return (
-      <div data-testid="user-card">
+      <div data-testid="user-card" className={styles.userCard}>
         <h3>{name}</h3>
+        <img
+          src={image && URL.createObjectURL(image)}
+          alt={name}
+          className={styles.userImage}
+        ></img>
         <p>{type}</p>
         <p>{date}</p>
         <p>{attack}</p>
-        <img src={image && URL.createObjectURL(image)} alt={name}></img>
       </div>
     );
   }

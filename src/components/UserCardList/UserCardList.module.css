@@ -1,0 +1,11 @@
+.cardsList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  width: 100%;
+  row-gap: 10px;
+}
+
+.message {
+  align-self: center;
+}

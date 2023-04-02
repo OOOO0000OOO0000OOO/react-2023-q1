@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styles from './CardsForm.module.css';
 
 export default class DateInput extends Component<{
   errors: { date?: string };
@@ -7,10 +8,10 @@ export default class DateInput extends Component<{
   render() {
     const { errors, date } = this.props;
     return (
-      <label>
+      <label className={styles.label}>
         birth date:
         <input type="date" name="date" ref={date} />
-        {errors.date && <span className="error-message">{errors.date}</span>}
+        {errors.date && <span className={styles.error}>{errors.date}</span>}
       </label>
     );
   }

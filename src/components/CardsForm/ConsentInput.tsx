@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styles from './CardsForm.module.css';
 
 export default class ConsentInput extends Component<{
   errors: { consent?: string };
@@ -7,11 +8,11 @@ export default class ConsentInput extends Component<{
   render() {
     const { errors, consent } = this.props;
     return (
-      <label>
+      <label className={styles.label}>
         I consent to my personal data:
         <input type="checkbox" name="checkbox" ref={consent} />
         {errors.consent && (
-          <span className="error-message">{errors.consent}</span>
+          <span className={styles.error}>{errors.consent}</span>
         )}
       </label>
     );

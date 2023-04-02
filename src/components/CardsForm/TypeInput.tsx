@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styles from './CardsForm.module.css';
 
 export default class TypeInput extends Component<{
   type: {
@@ -10,7 +11,7 @@ export default class TypeInput extends Component<{
   render() {
     const { type } = this.props;
     return (
-      <div>
+      <div className={styles.label}>
         type:
         <label>
           <input
