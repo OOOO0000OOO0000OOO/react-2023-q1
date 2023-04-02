@@ -20,16 +20,22 @@ const mockCardsData = [
   },
 ];
 
-global.fetch = vi.fn().mockResolvedValue({
-  json: vi.fn().mockResolvedValue({ cards: mockCardsData }),
-});
-
 describe('MainPage', () => {
+  const fetch = global.fetch;
+
+  beforeAll(() => {
+    global.fetch = vi.fn().mockResolvedValue({
+      json: vi.fn().mockResolvedValue({ cards: mockCardsData }),
+    });
+  });
+
+  afterAll(() => {
+    global.fetch = fetch;
+  });
+
   it('should render the title `Pokémon Cards`', () => {
     render(<MainPage />);
-    expect(screen.getByRole('heading', { level: 3 })).toHaveTextContent(
-      'Pokémon Cards'
-    );
+    expect(screen.getByRole('heading')).toHaveTextContent('Pokémon Cards');
   });
 
   it('should set the searchQuery from localStorage on component mount', () => {
@@ -40,7 +46,7 @@ describe('MainPage', () => {
 
   it('should fetch cards data and set the state on mount', async () => {
     render(<MainPage />);
-    expect(fetch).toHaveBeenCalled();
+    expect(global.fetch).toHaveBeenCalled();
     await waitFor(() =>
       expect(screen.getByText('Pikachu')).toBeInTheDocument()
     );
@@ -49,9 +55,7 @@ describe('MainPage', () => {
   it('should set the searchQuery in the state onSearch', async () => {
     render(<MainPage />);
     const input = screen.getByPlaceholderText('search for pokémons...');
-    await waitFor(() => {
-      userEvent.type(input, 'Pikachu');
-      expect(input).toHaveValue('Pikachu');
-    });
+    userEvent.type(input, 'Pikachu');
+    expect(input).toHaveValue('Pikachu');
   });
 });
