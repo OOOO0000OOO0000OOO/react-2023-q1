@@ -30,7 +30,11 @@ class CardForm extends Component<CardFormProps, CardFormState> {
   private date: RefObject<HTMLInputElement> = React.createRef();
   private attack: RefObject<HTMLSelectElement> = React.createRef();
   private consent: RefObject<HTMLInputElement> = React.createRef();
-  private type: RefObject<HTMLInputElement> = React.createRef();
+  private type: RefObject<HTMLInputElement>[] = [
+    React.createRef(),
+    React.createRef(),
+    React.createRef(),
+  ];
   private image: RefObject<HTMLInputElement> = React.createRef();
 
   state: CardFormState = {
@@ -69,11 +73,12 @@ class CardForm extends Component<CardFormProps, CardFormState> {
     this.setState({
       userCardData: {
         id: id,
-        name: this.name.current?.value,
-        date: this.date.current?.value,
+        name: this.name.current?.value || '',
+        date: this.date.current?.value || '',
         attack: this.attack.current?.value as Attack,
-        consent: this.consent.current?.checked,
-        type: this.type.current?.value as 'pokemon' | 'trainer' | 'energy',
+        consent: this.consent.current?.checked || false,
+        type: this.type.find((type) => type?.current?.checked)?.current
+          ?.value as 'pokemon' | 'trainer' | 'energy',
         image:
           (this.image.current?.files?.[0] &&
             URL.createObjectURL(this.image.current?.files[0])) ||
@@ -85,42 +90,42 @@ class CardForm extends Component<CardFormProps, CardFormState> {
       name: {
         required: {
           isValid: (input) => Boolean(input && input.value.trim().length),
-          message: 'name field is required',
+          message: 'name required',
         },
         custom: {
           isValid: (input) => Boolean(input && input.value.trim().length >= 3),
-          message: 'name field must contain at least 3 characters',
+          message: 'name must contain at least 3 characters',
         },
       },
       date: {
         required: {
           isValid: (input) => Boolean(input && input.value.trim().length),
-          message: 'date field is required',
+          message: 'date required',
         },
       },
       attack: {
         required: {
           isValid: (input) => Boolean(input && input.value),
-          message: 'attack field is required',
+          message: 'attack required',
         },
       },
       type: {
         required: {
           isValid: (input) => Boolean(input && input.value),
-          message: 'type field is required',
+          message: 'type required',
         },
       },
       image: {
         required: {
           isValid: (input) => Boolean(input && input.value),
-          message: 'image field is required',
+          message: 'image required',
         },
       },
       consent: {
         required: {
           isValid: (input) =>
             input instanceof HTMLInputElement && input.checked,
-          message: 'consent field is required',
+          message: 'consent required',
         },
       },
     });
@@ -133,7 +138,6 @@ class CardForm extends Component<CardFormProps, CardFormState> {
       'name',
       'date',
       'attack',
-      'type',
       'image',
       'consent',
     ] as const) {
@@ -208,13 +212,13 @@ class CardForm extends Component<CardFormProps, CardFormState> {
             type="radio"
             name="radio"
             value="pokemon"
-            ref={this.type}
+            ref={this.type[0]}
             defaultChecked
           />
           pokemon
-          <input type="radio" name="radio" value="trainer" ref={this.type} />
+          <input type="radio" name="radio" value="trainer" ref={this.type[1]} />
           trainer
-          <input type="radio" name="radio" value="energy" ref={this.type} />
+          <input type="radio" name="radio" value="energy" ref={this.type[2]} />
           energy
         </label>
 
