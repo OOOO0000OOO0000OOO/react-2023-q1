@@ -12,7 +12,10 @@ export default class UseCardsList extends Component<Props> {
     const { cards } = this.props;
 
     return (
-      <div data-testid="user-cards-list" className={styles.cardsList}>
+      <div
+        data-testid="user-cards-list"
+        className={cards.length ? styles.cardsList : styles.emptyList}
+      >
         {cards.length ? (
           cards.map((card: UserCardData) => (
             <UserCard key={card.id} {...card} />

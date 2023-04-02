@@ -1,9 +1,13 @@
+.emptyList {
+  text-align: center;
+}
+
 .cardsList {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
   width: 100%;
-  row-gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 170px);
+  grid-gap: 10px;
+  justify-content: space-between;
 }
 
 .message {

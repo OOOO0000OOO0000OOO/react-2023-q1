@@ -4,9 +4,9 @@ import styles from './AboutPage.module.css';
 export default class AboutPage extends Component {
   render() {
     return (
-      <div>
+      <div className={styles.aboutContainer}>
         <h3 className={styles.heading}>About Us</h3>
-        <p>
+        <p className={styles.text}>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Est rerum
           doloribus dolore quibusdam eaque nemo voluptatum aperiam, autem,
           veniam voluptate et eligendi. Culpa, sint quis reprehenderit quas
