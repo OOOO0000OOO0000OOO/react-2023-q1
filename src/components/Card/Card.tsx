@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { CardData } from '../../models/interfaces';
+import { CardData } from '../../models/CardData';
 
 export default class Card extends Component<CardData> {
   render() {

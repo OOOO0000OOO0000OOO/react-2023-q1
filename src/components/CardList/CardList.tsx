@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Card from '../../components/Card/Card';
-import { CardData } from '../../models/interfaces';
+import { CardData } from '../../models/CardData';
 
 interface Props {
   cards: CardData[];
