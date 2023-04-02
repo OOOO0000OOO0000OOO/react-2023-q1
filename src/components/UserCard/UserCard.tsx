@@ -11,7 +11,7 @@ export default class UserCard extends Component<UserCardData> {
         <p>{type}</p>
         <p>{date}</p>
         <p>{attack}</p>
-        <img src={image} alt={name}></img>
+        <img src={image && URL.createObjectURL(image)} alt={name}></img>
       </div>
     );
   }

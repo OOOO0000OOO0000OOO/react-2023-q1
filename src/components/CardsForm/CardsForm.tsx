@@ -112,6 +112,8 @@ class CardForm extends Component<CardFormProps, CardFormState> {
 
       this.form.current?.reset();
       this.resetState();
+
+      if (this.image.current) this.image.current.value = '';
     }
 
     if (onSuccess) onSuccess(userCardData);
