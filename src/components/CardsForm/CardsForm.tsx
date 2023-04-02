@@ -9,18 +9,21 @@ interface CardFormState {
   userCardData: UserCardData;
   errors: { [K in keyof UserCardData]?: string };
 }
-
-interface Validation {
-  isValid: (
-    value: HTMLInputElement | HTMLSelectElement | null
-  ) => boolean | null;
-  message: string;
-}
-
 interface Validations {
-  required: Validation;
-  custom?: Validation;
+  required: {
+    isValid: (
+      value: HTMLInputElement | HTMLSelectElement | null
+    ) => boolean | null;
+    message: string;
+  };
+  custom?: {
+    isValid: (
+      value: HTMLInputElement | HTMLSelectElement | null
+    ) => boolean | null;
+    message: string;
+  };
 }
+
 class CardForm extends Component<CardFormProps, CardFormState> {
   private form: RefObject<HTMLFormElement> = React.createRef();
   private name: RefObject<HTMLInputElement> = React.createRef();
