@@ -9,11 +9,14 @@ export class Header extends Component {
 
     return (
       <header>
+        <NavLink to="/" style={linkStyle}>
+          Cards
+        </NavLink>
         <NavLink to="/about" style={linkStyle}>
           About
         </NavLink>
-        <NavLink to="/" style={linkStyle}>
-          Home
+        <NavLink to="/forms" style={linkStyle}>
+          Create Card
         </NavLink>
       </header>
     );
