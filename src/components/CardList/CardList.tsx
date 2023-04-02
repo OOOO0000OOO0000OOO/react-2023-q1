@@ -9,7 +9,7 @@ interface Props {
   error: Error | null;
 }
 
-const CardsList: React.FC<Props> = ({ cards, searchQuery, error }) => {
+const CardList: React.FC<Props> = ({ cards, searchQuery, error }) => {
   return (
     <div className={styles.cardList}>
       {error ? (
@@ -25,4 +25,4 @@ const CardsList: React.FC<Props> = ({ cards, searchQuery, error }) => {
   );
 };
 
-export default CardsList;
+export default CardList;

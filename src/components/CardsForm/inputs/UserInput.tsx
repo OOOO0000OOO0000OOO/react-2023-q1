@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styles from './CardsForm.module.css';
+import styles from '../CardsForm.module.css';
 
 export default class UserInput extends Component<{
   label: string;

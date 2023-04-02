@@ -1,8 +1,7 @@
 import React from 'react';
-import CardsList from '../../components/CardList/CardList';
-import SearchBar from '../../components/SearchBar/SearchBar';
+import { CardList, SearchBar } from '../../components';
 import styles from './MainPage.module.css';
-import { useCards } from '../../api/fetchCards';
+import { useCards } from '../../api/cards';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 const MainPage = () => {
@@ -17,7 +16,7 @@ const MainPage = () => {
     <div className={styles.mainContainer}>
       <h3 className={styles.heading}>Pokémon Cards</h3>
       <SearchBar searchQuery={searchQuery} onSearch={setSearchQuery} />
-      <CardsList searchQuery={searchQuery} cards={cards} error={error} />
+      <CardList searchQuery={searchQuery} cards={cards} error={error} />
     </div>
   );
 };

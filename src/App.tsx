@@ -1,11 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Header from './components/Header/Header';
-import MainPage from './pages/Main/MainPage';
-import AboutPage from './pages/About/AboutPage';
-import NotFoundPage from './pages/NotFound/NotFoundPage';
-import CardsFormPage from './pages/CardsForm/CardsFormPage';
-import Layout from './components/Layout/Layout';
+import { Header, Layout } from './components';
+import { MainPage, AboutPage, NotFoundPage, CardsFormPage } from './pages';
 import './App.css';
 
 function App() {

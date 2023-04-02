@@ -7,14 +7,14 @@ interface Props {
   cards: UserCardData[];
 }
 
-export default class UseCardsList extends Component<Props> {
+export default class UseCardList extends Component<Props> {
   render() {
     const { cards } = this.props;
 
     return (
       <div
         data-testid="user-cards-list"
-        className={cards.length ? styles.cardsList : styles.emptyList}
+        className={cards.length ? styles.cardList : styles.emptyList}
       >
         {cards.length ? (
           cards.map((card: UserCardData) => (

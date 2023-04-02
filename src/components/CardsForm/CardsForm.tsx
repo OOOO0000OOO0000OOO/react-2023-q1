@@ -9,9 +9,7 @@ import {
 } from '../../models/UserCardData';
 import { FormFields, formFields } from '../../models/FormData';
 import { Validations, validations } from '../../models/ValidationsData';
-import UserSelect from './UserSelect';
-import TypeInput from './TypeInput';
-import UserInput from './UserInput';
+import { TypeInput, UserInput, UserSelect } from './inputs';
 import styles from './CardsForm.module.css';
 
 interface CardFormProps {

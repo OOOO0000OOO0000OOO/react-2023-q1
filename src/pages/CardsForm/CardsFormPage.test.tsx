@@ -22,7 +22,7 @@ describe('CardsFormPage', () => {
     image: new File(['image'], 'image.png', { type: 'image/png' }),
   } as const;
 
-  it('should render a UserCardsList component', () => {
+  it('should render a UserCardList component', () => {
     render(<CardsFormPage />);
 
     expect(screen.getByTestId('user-cards-list')).toBeInTheDocument();
