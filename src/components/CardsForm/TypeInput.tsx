@@ -10,21 +10,27 @@ export default class TypeInput extends Component<{
   render() {
     const { type } = this.props;
     return (
-      <label>
+      <div>
         type:
-        <input
-          type="radio"
-          name="radio"
-          value="pokemon"
-          ref={type.pokemon}
-          defaultChecked
-        />
-        pokemon
-        <input type="radio" name="radio" value="trainer" ref={type.energy} />
-        trainer
-        <input type="radio" name="radio" value="energy" ref={type.trainer} />
-        energy
-      </label>
+        <label>
+          <input
+            type="radio"
+            name="radio"
+            value="pokemon"
+            ref={type.pokemon}
+            defaultChecked
+          />
+          pokemon
+        </label>
+        <label>
+          <input type="radio" name="radio" value="trainer" ref={type.energy} />
+          trainer
+        </label>
+        <label>
+          <input type="radio" name="radio" value="energy" ref={type.trainer} />
+          energy
+        </label>
+      </div>
     );
   }
 }
