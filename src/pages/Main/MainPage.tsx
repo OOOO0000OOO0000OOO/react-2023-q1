@@ -1,45 +1,25 @@
-import React, { Component } from 'react';
+import React from 'react';
 import CardsList from '../../components/CardList/CardList';
 import SearchBar from '../../components/SearchBar/SearchBar';
-import { CardData } from '../../models/CardData';
 import styles from './MainPage.module.css';
-import { fetchCards } from '../../api/fetchCards';
+import { useCards } from '../../api/fetchCards';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 
-interface State {
-  searchQuery: string;
-  cards: CardData[];
-  error: Error | null;
-}
+const MainPage = () => {
+  const [searchQuery, setSearchQuery] = useLocalStorage('search');
 
-export default class MainPage extends Component {
-  state: State = {
-    searchQuery: localStorage.getItem('search') || '',
-    cards: [],
-    error: null,
-  };
+  const {
+    data: { cards },
+    error,
+  } = useCards();
 
-  componentDidMount() {
-    fetchCards()
-      .then(({ cards }) => this.setState({ cards }))
-      .catch((error: Error) => this.setState({ error }));
-  }
+  return (
+    <div className={styles.mainContainer}>
+      <h3 className={styles.heading}>Pokémon Cards</h3>
+      <SearchBar searchQuery={searchQuery} onSearch={setSearchQuery} />
+      <CardsList searchQuery={searchQuery} cards={cards} error={error} />
+    </div>
+  );
+};
 
-  componentWillUnmount() {
-    localStorage.setItem('search', this.state.searchQuery);
-  }
-
-  private onSearch = (searchQuery: string) => {
-    this.setState({ searchQuery });
-  };
-
-  render() {
-    const { searchQuery } = this.state;
-    return (
-      <div className={styles.mainContainer}>
-        <h3 className={styles.heading}>Pokémon Cards</h3>
-        <SearchBar searchQuery={searchQuery} onSearch={this.onSearch} />
-        <CardsList {...this.state} />
-      </div>
-    );
-  }
-}
+export default MainPage;
