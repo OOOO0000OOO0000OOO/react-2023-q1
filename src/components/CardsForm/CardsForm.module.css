@@ -14,7 +14,7 @@
 }
 
 .error {
-  color:tomato;
+  color: tomato;
   position: absolute;
   left: calc(100% + 20px);
   width: 100%;
