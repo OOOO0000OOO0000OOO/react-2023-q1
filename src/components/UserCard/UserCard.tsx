@@ -6,7 +6,7 @@ export default class UserCard extends Component<UserCardData> {
     const { name, date, attack, type, image } = this.props;
 
     return (
-      <div data-test="user-card">
+      <div data-testid="user-card">
         <h3>{name}</h3>
         <p>{type}</p>
         <p>{date}</p>
