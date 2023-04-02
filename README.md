@@ -3,21 +3,25 @@
 To get started with this project, run the following commands:
 
 Run the development server
+
 ```bash
 npm run dev
 ```
 
 Run linting
+
 ```bash
 npm run lint
 ```
 
 Run tests
+
 ```bash
 npm run test
 ```
 
 Generate a coverage report
+
 ```bash
 npm run coverage
 ```
