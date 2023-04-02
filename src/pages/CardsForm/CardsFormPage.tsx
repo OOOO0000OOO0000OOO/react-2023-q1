@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import UserCardsList from '../../components/UserCardList/UserCardList';
 import CardsForm from '../../components/CardsForm/CardsForm';
 import { UserCardData } from '../../models/UserCardData';
 
@@ -17,9 +18,12 @@ export default class CardsFormPage extends Component {
   };
 
   render() {
+    const { cards } = this.state;
+
     return (
       <div>
         <CardsForm onSubmit={this.addCard} />
+        <UserCardsList cards={cards} />
       </div>
     );
   }

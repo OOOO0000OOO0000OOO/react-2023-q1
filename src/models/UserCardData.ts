@@ -18,12 +18,11 @@ export const attacks = [
 export type Attack = (typeof attacks)[number];
 
 export interface UserCardData {
-  id: string;
+  id: number;
   name?: string;
   level?: string;
   attack?: Attack;
-  hide?: boolean;
   type?: 'pokemon' | 'trainer' | 'energy';
   image?: FileList | string;
-  [key: string]: string | boolean | FileList | undefined;
+  [key: string]: string | number | FileList | undefined;
 }
