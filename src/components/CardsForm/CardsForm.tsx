@@ -19,6 +19,7 @@ import TypeInput from './TypeInput';
 
 interface CardFormProps {
   onSubmit: (value: UserCardData) => void;
+  onSuccess?: (value: unknown) => void;
 }
 
 interface CardFormState {
@@ -63,6 +64,7 @@ class CardForm extends Component<CardFormProps, CardFormState> {
     this.setState({
       userCardData: {
         id,
+        email: this.email.current?.value || '',
         name: this.name.current?.value || '',
         date: this.date.current?.value || '',
         attack: this.attack.current?.value as Attack,
@@ -70,10 +72,7 @@ class CardForm extends Component<CardFormProps, CardFormState> {
         type: this.type[
           types.find((type) => this.type[type]?.current?.checked) || 'pokemon'
         ]?.current?.value as Type,
-        image:
-          (this.image.current?.files?.[0] &&
-            URL.createObjectURL(this.image.current?.files[0])) ||
-          '',
+        image: this.image.current?.files?.[0] || '',
       },
     });
 
@@ -105,7 +104,7 @@ class CardForm extends Component<CardFormProps, CardFormState> {
 
     await this.updateState();
 
-    const { onSubmit } = this.props;
+    const { onSubmit, onSuccess } = this.props;
     const { userCardData, errors } = this.state;
 
     if (!Object.values(errors).find(Boolean)) {
@@ -114,13 +113,19 @@ class CardForm extends Component<CardFormProps, CardFormState> {
       this.form.current?.reset();
       this.resetState();
     }
+
+    if (onSuccess) onSuccess(userCardData);
   };
 
   render() {
     const { errors } = this.state;
 
     return (
-      <form ref={this.form} onSubmit={this.handleSubmit}>
+      <form
+        data-testid="card-form"
+        ref={this.form}
+        onSubmit={this.handleSubmit}
+      >
         <NameInput errors={errors} name={this.name} />
         <EmailInput errors={errors} email={this.email} />
         <DateInput errors={errors} date={this.date} />

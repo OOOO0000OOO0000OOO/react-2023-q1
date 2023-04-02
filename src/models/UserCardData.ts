@@ -24,10 +24,11 @@ export type Type = (typeof types)[number];
 export interface UserCardData {
   id: number;
   name?: string;
+  email?: string;
   date?: string;
   attack?: Attack;
   type?: Type;
-  image?: string;
+  image?: File | '';
   consent?: boolean;
 }
 
