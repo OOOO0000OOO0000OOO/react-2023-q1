@@ -13,7 +13,7 @@ describe('Header component', () => {
     );
 
     const aboutLink = screen.getByRole('link', { name: /about/i });
-    const homeLink = screen.getByRole('link', { name: /home/i });
+    const homeLink = screen.getByRole('link', { name: /cards/i });
 
     expect(aboutLink.style.color).toBe('black');
     expect(homeLink.style.color).toBe('darkcyan');
