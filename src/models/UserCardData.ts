@@ -20,9 +20,9 @@ export type Attack = (typeof attacks)[number];
 export interface UserCardData {
   id: number;
   name?: string;
-  level?: string;
+  date?: string;
   attack?: Attack;
   type?: 'pokemon' | 'trainer' | 'energy';
-  image?: FileList | string;
-  [key: string]: string | number | FileList | undefined;
+  image?: string;
+  consent?: boolean;
 }

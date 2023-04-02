@@ -11,6 +11,7 @@ export default class UserCard extends Component<UserCardData> {
         <p>{type}</p>
         <p>{level}</p>
         <p>{attack}</p>
+        <img src={image} alt={name}></img>
       </div>
     );
   }
