@@ -4,19 +4,18 @@ import styles from './Header.module.css';
 
 export class Header extends Component {
   render() {
-    const linkStyle = ({ isActive }: { isActive: boolean }) => ({
-      color: isActive ? 'darkcyan' : 'black',
-    });
+    const linkStyle = ({ isActive }: { isActive: boolean }) =>
+      `${styles.link} ${isActive ? styles.linkActive : ''}`;
 
     return (
       <header className={styles.header}>
-        <NavLink to="/" style={linkStyle} className={styles.link}>
+        <NavLink to="/" className={linkStyle}>
           Cards
         </NavLink>
-        <NavLink to="/about" style={linkStyle} className={styles.link}>
+        <NavLink to="/about" className={linkStyle}>
           About
         </NavLink>
-        <NavLink to="/forms" style={linkStyle} className={styles.link}>
+        <NavLink to="/forms" className={linkStyle}>
           Create Card
         </NavLink>
       </header>
