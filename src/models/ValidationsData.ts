@@ -1,4 +1,4 @@
-import { UserCardData } from './UserCardData';
+import { FormFields } from './FormData';
 
 export interface Validations {
   required: {
@@ -16,7 +16,7 @@ export interface Validations {
 }
 
 export const validations: {
-  [K in Exclude<keyof UserCardData, 'id'>]: Validations;
+  [K in FormFields]: Validations;
 } = {
   name: {
     required: {
@@ -38,12 +38,6 @@ export const validations: {
     required: {
       isValid: (input) => Boolean(input && input.value),
       message: 'attack required',
-    },
-  },
-  type: {
-    required: {
-      isValid: (input) => Boolean(input && input.value),
-      message: 'type required',
     },
   },
   image: {

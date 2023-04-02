@@ -7,7 +7,8 @@ import {
   UserCardData,
   initialState,
 } from '../../models/UserCardData';
-import { validations, Validations } from '../../models/ValidationsData';
+import { FormFields, formFields } from '../../models/FormData';
+import { Validations, validations } from '../../models/ValidationsData';
 import AttackInput from './AttackInput';
 import ConsentInput from './ConsentInput';
 import DateInput from './DateInput';
@@ -21,7 +22,7 @@ interface CardFormProps {
 
 interface CardFormState {
   userCardData: UserCardData;
-  errors: { [K in keyof UserCardData]?: string };
+  errors: { [K in FormFields]?: string };
 }
 
 class CardForm extends Component<CardFormProps, CardFormState> {
@@ -78,15 +79,9 @@ class CardForm extends Component<CardFormProps, CardFormState> {
   };
 
   validate = async (validations: {
-    [K in Exclude<keyof UserCardData, 'id'>]: Validations;
+    [K in FormFields]: Validations;
   }) => {
-    for (const field of [
-      'name',
-      'date',
-      'attack',
-      'image',
-      'consent',
-    ] as const) {
+    for (const field of formFields) {
       const { required, custom } = validations[field];
       const { errors } = this.state;
 
