@@ -26,7 +26,12 @@ const UserInput: React.FC<Props> = ({
   return (
     <label className={styles.label}>
       {label || name}:
-      <input {...register(name, options)} type={type} {...rest} />
+      <input
+        {...register(name, options)}
+        type={type}
+        {...rest}
+        className={styles.input}
+      />
       {error && (
         <span className={styles.error}>
           {error?.message || `invalid format`}

@@ -25,7 +25,7 @@ const TypeInput: React.FC<Props> = ({
       {name}:
       {types.map((value) => {
         return (
-          <label key={value}>
+          <label className={styles.typeLabel} key={value}>
             {value}
             <input
               type="radio"
