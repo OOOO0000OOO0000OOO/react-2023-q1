@@ -63,12 +63,29 @@ const CardForm: React.FC<CardFormProps> = ({ onSubmit }) => {
         }}
         error={errors?.date}
       ></UserInput>
-      <UserSelect name="attack" register={register} options={attacks} />
+      <UserSelect
+        name="attack"
+        register={register}
+        options={attacks}
+        regOptions={{
+          required: 'attack required',
+          validate: (value) =>
+            (value && attacks.includes(value as (typeof attacks)[number])) ||
+            'choose the attack from the list',
+        }}
+        error={errors?.attack}
+      />
       <TypeInput
         name="type"
         register={register}
         types={types}
-        defaultChecked="pokemon"
+        options={{
+          required: 'type required',
+          validate: (value) =>
+            (value && types.includes(value as (typeof types)[number])) ||
+            'select one of the given types',
+        }}
+        error={errors?.type}
       />
       <UserInput
         register={register}
@@ -77,6 +94,11 @@ const CardForm: React.FC<CardFormProps> = ({ onSubmit }) => {
         accept="image/*"
         options={{
           required: 'image required',
+          validate: (fileList) =>
+            (fileList instanceof FileList &&
+              fileList[0] &&
+              /image/.test(fileList[0].type)) ||
+            'invalid image format',
         }}
         error={errors?.image}
       />

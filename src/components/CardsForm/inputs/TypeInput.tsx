@@ -7,7 +7,6 @@ import { FormFields } from '../../../models/FormData';
 interface Props {
   name: FormFields;
   types: readonly Type[];
-  defaultChecked: string;
   register: UseFormRegister<UserCardData>;
   options?: RegisterOptions<UserCardData, FormFields>;
   error?: { message?: string };
@@ -18,7 +17,7 @@ const TypeInput: React.FC<Props> = ({
   register,
   options,
   types,
-  defaultChecked,
+  error,
 }) => {
   return (
     <div className={styles.label}>
@@ -27,15 +26,15 @@ const TypeInput: React.FC<Props> = ({
         return (
           <label className={styles.typeLabel} key={value}>
             {value}
-            <input
-              type="radio"
-              value={value}
-              {...register(name, options)}
-              defaultChecked={value === defaultChecked}
-            />
+            <input type="radio" value={value} {...register(name, options)} />
           </label>
         );
       })}
+      {error && (
+        <span className={styles.error}>
+          {error?.message || `invalid format`}
+        </span>
+      )}
     </div>
   );
 };

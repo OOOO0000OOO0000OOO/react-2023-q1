@@ -7,12 +7,7 @@ const mockRefs = ['pokemon', 'trainer', 'energy'] as const;
 describe('TypeInput component', () => {
   it('renders correctly with expected props', () => {
     const { getByLabelText, getByText } = render(
-      <TypeInput
-        name="type"
-        register={vi.fn()}
-        types={mockRefs}
-        defaultChecked="trainer"
-      />
+      <TypeInput name="type" register={vi.fn()} types={mockRefs} options={{}} />
     );
 
     expect(getByText(/type:/i)).toBeInTheDocument();
@@ -20,7 +15,5 @@ describe('TypeInput component', () => {
     expect(getByLabelText('pokemon')).toBeInTheDocument();
     expect(getByLabelText('trainer')).toBeInTheDocument();
     expect(getByLabelText('energy')).toBeInTheDocument();
-
-    expect(getByLabelText('trainer')).toHaveAttribute('checked');
   });
 });

@@ -19,6 +19,7 @@ describe('CardsFormPage', () => {
     email: 'johndoe@test.com',
     date: '2022-01-01',
     type: 'trainer',
+    attack: 'Draining Kiss',
     image: new File(['image'], 'image.png', { type: 'image/png' }),
   } as const;
 
@@ -34,8 +35,10 @@ describe('CardsFormPage', () => {
     const nameInput = screen.getByLabelText<HTMLInputElement>(/name/i);
     const emailInput = screen.getByLabelText<HTMLInputElement>(/email/i);
     const dateInput = screen.getByLabelText<HTMLInputElement>(/date/i);
+    const attackInput = screen.getByLabelText<HTMLSelectElement>(/attack/i);
     const consentInput = screen.getByLabelText<HTMLInputElement>(/consent/i);
     const imageInput = screen.getByLabelText<HTMLInputElement>(/image/i);
+    const trainerInput = screen.getByLabelText<HTMLInputElement>(/trainer/i);
     const submitButton = screen.getByRole('button');
 
     fireEvent.input(nameInput, { target: { value: mockCardData.name } });
@@ -43,8 +46,10 @@ describe('CardsFormPage', () => {
       target: { value: mockCardData.email },
     });
     fireEvent.input(dateInput, { target: { value: mockCardData.date } });
+    fireEvent.click(trainerInput);
     fireEvent.click(consentInput);
 
+    await userEvent.selectOptions(attackInput, mockCardData.attack);
     await userEvent.upload(imageInput, new File([], '', { type: 'image/png' }));
 
     fireEvent.click(submitButton);

@@ -15,13 +15,13 @@ describe('UserSelect component', () => {
         name="attack"
         register={mockRegister}
         options={mockAttacks}
-        defaultValue={mockAttacks[2]}
+        regOptions={{}}
       />
     );
 
     expect(screen.getByLabelText(/attack/i)).toBeInTheDocument();
-    expect(screen.getByRole('combobox')).toHaveDisplayValue([mockAttacks[2]]);
-    expect(screen.getAllByRole('option')).toHaveLength(mockAttacks.length);
+    expect(screen.getByRole('combobox')).toHaveDisplayValue(/choose attack/i);
+    expect(screen.getAllByRole('option')).toHaveLength(mockAttacks.length + 1);
 
     mockAttacks.forEach((attack) => {
       expect(screen.getByText(attack)).toBeInTheDocument();
@@ -36,7 +36,7 @@ describe('UserSelect component', () => {
         name="attack"
         register={mockRegister}
         options={mockAttacks}
-        defaultValue={mockAttacks[2]}
+        regOptions={{}}
       />
     );
 
