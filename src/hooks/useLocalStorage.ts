@@ -10,7 +10,7 @@ export const useLocalStorage = (
     return () => {
       localStorage.setItem(key, prev.current);
     };
-  }, []);
+  }, [key]);
 
   useEffect(() => {
     prev.current = item;
