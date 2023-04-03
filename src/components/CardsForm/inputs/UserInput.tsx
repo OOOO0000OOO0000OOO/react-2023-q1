@@ -1,29 +1,39 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styles from '../CardsForm.module.css';
+import { RegisterOptions, UseFormRegister } from 'react-hook-form';
+import { UserCardData } from '../../../models/UserCardData';
+import { FormFields } from '../../../models/FormData';
 
-export default class UserInput extends Component<{
-  label: string;
-  inputRef: React.RefObject<HTMLInputElement>;
+interface Props {
+  label?: string;
   type?: 'text' | 'date' | 'file' | 'checkbox';
-  name: 'name' | 'email' | 'date' | 'image' | 'consent';
-  errors: { [key in string]?: string };
+  register: UseFormRegister<UserCardData>;
+  options: RegisterOptions<UserCardData, FormFields>;
+  name: FormFields;
+  error?: { message?: string };
   accept?: string;
-}> {
-  render() {
-    const {
-      errors,
-      label,
-      name,
-      inputRef,
-      type = 'text',
-      ...options
-    } = this.props;
-    return (
-      <label className={styles.label}>
-        {label}
-        <input {...options} name={name} type={type} ref={inputRef} />
-        {errors[name] && <span className={styles.error}>{errors[name]}</span>}
-      </label>
-    );
-  }
 }
+
+const UserInput: React.FC<Props> = ({
+  type = 'text',
+  name,
+  error,
+  register,
+  options,
+  label,
+  ...rest
+}) => {
+  return (
+    <label className={styles.label}>
+      {label || name}:
+      <input {...register(name, options)} type={type} {...rest} />
+      {error && (
+        <span className={styles.error}>
+          {error?.message || `invalid format`}
+        </span>
+      )}
+    </label>
+  );
+};
+
+export default UserInput;

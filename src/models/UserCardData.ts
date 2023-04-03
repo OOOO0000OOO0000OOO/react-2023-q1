@@ -22,13 +22,13 @@ export const types = ['pokemon', 'trainer', 'energy'] as const;
 export type Type = (typeof types)[number];
 
 export interface UserCardData {
-  id: number;
+  id: number | string;
   name?: string;
   email?: string;
   date?: string;
   attack?: Attack;
   type?: Type;
-  image?: File | '';
+  image?: FileList | '';
   consent?: boolean;
 }
 

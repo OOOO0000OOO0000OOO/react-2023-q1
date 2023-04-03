@@ -1,27 +1,36 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styles from '../CardsForm.module.css';
+import { RegisterOptions, UseFormRegister } from 'react-hook-form';
+import { UserCardData } from '../../../models/UserCardData';
+import { FormFields } from '../../../models/FormData';
 
 interface UserSelectProps {
-  label: string;
+  name: FormFields;
   options: readonly string[];
-  selectRef: React.RefObject<HTMLSelectElement>;
+  register: UseFormRegister<UserCardData>;
+  regOptions?: RegisterOptions<UserCardData, FormFields>;
+  error?: { message?: string };
   defaultValue?: string;
 }
 
-export default class UserSelect extends Component<UserSelectProps> {
-  render() {
-    const { label, options, selectRef, defaultValue } = this.props;
-    return (
-      <label className={styles.label}>
-        {label}
-        <select name="select" ref={selectRef} defaultValue={defaultValue}>
-          {options.map((attack) => (
-            <option key={attack} value={attack}>
-              {attack}
-            </option>
-          ))}
-        </select>
-      </label>
-    );
-  }
-}
+const UserSelect: React.FC<UserSelectProps> = ({
+  name,
+  register,
+  options,
+  defaultValue,
+}: UserSelectProps) => {
+  return (
+    <label className={styles.label}>
+      {name}:
+      <select {...register(name)} defaultValue={defaultValue}>
+        {options.map((attack) => (
+          <option key={attack} value={attack}>
+            {attack}
+          </option>
+        ))}
+      </select>
+    </label>
+  );
+};
+
+export default UserSelect;

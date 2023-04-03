@@ -1,35 +1,43 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styles from '../CardsForm.module.css';
+import { RegisterOptions, UseFormRegister } from 'react-hook-form';
+import { Type, UserCardData } from '../../../models/UserCardData';
+import { FormFields } from '../../../models/FormData';
 
-export default class TypeInput extends Component<{
-  label: string;
-  types: {
-    [value in string]: React.RefObject<HTMLInputElement>;
-  };
+interface Props {
+  name: FormFields;
+  types: readonly Type[];
   defaultChecked: string;
-}> {
-  render() {
-    const { label, types, defaultChecked } = this.props;
-    return (
-      <div className={styles.label}>
-        {label}
-        {Object.keys(types).map((value) => {
-          const radioRef = types[value];
-
-          return (
-            <label key={value}>
-              {value}
-              <input
-                type="radio"
-                name="radio"
-                value={value}
-                ref={radioRef}
-                defaultChecked={value === defaultChecked}
-              />
-            </label>
-          );
-        })}
-      </div>
-    );
-  }
+  register: UseFormRegister<UserCardData>;
+  options?: RegisterOptions<UserCardData, FormFields>;
+  error?: { message?: string };
 }
+
+const TypeInput: React.FC<Props> = ({
+  name,
+  register,
+  options,
+  types,
+  defaultChecked,
+}) => {
+  return (
+    <div className={styles.label}>
+      {name}:
+      {types.map((value) => {
+        return (
+          <label key={value}>
+            {value}
+            <input
+              type="radio"
+              value={value}
+              {...register(name, options)}
+              defaultChecked={value === defaultChecked}
+            />
+          </label>
+        );
+      })}
+    </div>
+  );
+};
+
+export default TypeInput;
