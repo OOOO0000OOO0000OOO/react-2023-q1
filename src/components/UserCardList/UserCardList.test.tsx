@@ -1,8 +1,8 @@
 import React from 'react';
 import { describe, it, expect, vi } from 'vitest';
 import { render } from '@testing-library/react';
+import { UserCardData } from '../../models';
 import UserCardList from './UserCardList';
-import { UserCardData } from '../../models/UserCardData';
 
 const mockUserCards: UserCardData[] = [
   {

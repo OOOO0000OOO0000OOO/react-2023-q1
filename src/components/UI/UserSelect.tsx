@@ -1,8 +1,7 @@
 import React from 'react';
-import styles from '../CardsForm.module.css';
 import { RegisterOptions, UseFormRegister } from 'react-hook-form';
-import { UserCardData } from '../../../models/UserCardData';
-import { FormFields } from '../../../models/FormData';
+import { UserCardData, FormFields } from '../../models';
+import styles from './Input.module.css';
 
 interface UserSelectProps {
   name: FormFields;

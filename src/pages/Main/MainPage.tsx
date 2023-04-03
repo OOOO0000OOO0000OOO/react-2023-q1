@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { CardList, SearchBar } from '../../components';
-import styles from './MainPage.module.css';
 import { useCards } from '../../api/cards';
-import { useLocalStorage } from '../../hooks/useLocalStorage';
+import { useLocalStorage } from '../../hooks';
+import styles from './MainPage.module.css';
 
 const MainPage = () => {
   const [enterQuery, setEnterQuery] = useLocalStorage('search');

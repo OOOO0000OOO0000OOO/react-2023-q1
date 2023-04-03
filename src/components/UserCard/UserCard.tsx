@@ -1,5 +1,5 @@
 import React from 'react';
-import { UserCardData } from '../../models/UserCardData';
+import { UserCardData } from '../../models';
 import styles from './UserCard.module.css';
 
 const UserCard = ({ name, date, attack, type, image }: UserCardData) => {

@@ -1,6 +1,5 @@
 import { RegisterOptions } from 'react-hook-form';
-import { FormFields } from '../models/FormData';
-import { UserCardData, attacks, types } from '../models/UserCardData';
+import { FormFields, UserCardData, attacks, types } from '../models';
 
 export const registerOptions: Record<
   FormFields,

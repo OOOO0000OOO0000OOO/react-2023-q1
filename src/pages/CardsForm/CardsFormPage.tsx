@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
+import { UserCardData } from '../../models';
 import { UserCardList, CardsForm } from '../../components';
-import { UserCardData } from '../../models/UserCardData';
 import styles from './CardsFormPage.module.css';
 
 const CardsFormPage = () => {

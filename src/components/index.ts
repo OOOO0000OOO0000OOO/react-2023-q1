@@ -6,7 +6,7 @@ import Layout from './Layout/Layout';
 import SearchBar from './SearchBar/SearchBar';
 import UserCard from './UserCard/UserCard';
 import UserCardList from './UserCardList/UserCardList';
-
+export * from './UI';
 export {
   Card,
   CardList,

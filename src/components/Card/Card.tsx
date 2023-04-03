@@ -1,5 +1,5 @@
 import React from 'react';
-import { CardData } from '../../models/CardData';
+import { CardData } from '../../models';
 import styles from './Card.module.css';
 
 const Card: React.FC<CardData> = ({ imageUrl, name, types, supertype }) => {
