@@ -1,6 +1,6 @@
 import React from 'react';
-import { describe, expect, it } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import UserSelect from './UserSelect';
 
@@ -8,13 +8,13 @@ const mockAttacks = ['Thunderbolt', 'Earthquake', 'Flamethrower'];
 
 describe('UserSelect component', () => {
   it('renders correctly with given props', () => {
-    const mockRef = React.createRef<HTMLSelectElement>();
+    const mockRegister = vi.fn();
 
     render(
       <UserSelect
-        label="attack:"
+        name="attack"
+        register={mockRegister}
         options={mockAttacks}
-        selectRef={mockRef}
         defaultValue={mockAttacks[2]}
       />
     );
@@ -28,15 +28,23 @@ describe('UserSelect component', () => {
     });
   });
 
-  it('updates the ref when an option is selected', () => {
-    const mockRef2 = React.createRef<HTMLSelectElement>();
+  it('updates the ref when an option is selected', async () => {
+    const mockRegister = vi.fn();
 
     render(
-      <UserSelect label="attack:" options={mockAttacks} selectRef={mockRef2} />
+      <UserSelect
+        name="attack"
+        register={mockRegister}
+        options={mockAttacks}
+        defaultValue={mockAttacks[2]}
+      />
     );
 
-    userEvent.selectOptions(screen.getByRole('combobox'), 'Thunderbolt');
-
-    expect(mockRef2.current?.value).toBe('Thunderbolt');
+    await userEvent.selectOptions(screen.getByRole('combobox'), 'Thunderbolt');
+    await waitFor(() => {
+      expect(screen.getByRole<HTMLSelectElement>('combobox')?.value).toBe(
+        'Thunderbolt'
+      );
+    });
   });
 });

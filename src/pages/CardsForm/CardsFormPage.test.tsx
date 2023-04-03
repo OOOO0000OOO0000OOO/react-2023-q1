@@ -38,12 +38,14 @@ describe('CardsFormPage', () => {
     const imageInput = screen.getByLabelText<HTMLInputElement>(/image/i);
     const submitButton = screen.getByRole('button');
 
-    nameInput.value = mockCardData.name;
-    emailInput.value = mockCardData.email;
-    dateInput.value = mockCardData.date;
-    consentInput.checked = true;
+    fireEvent.input(nameInput, { target: { value: mockCardData.name } });
+    fireEvent.input(emailInput, {
+      target: { value: mockCardData.email },
+    });
+    fireEvent.input(dateInput, { target: { value: mockCardData.date } });
+    fireEvent.click(consentInput);
 
-    await userEvent.upload(imageInput, mockCardData.image);
+    await userEvent.upload(imageInput, new File([], '', { type: 'image/png' }));
 
     fireEvent.click(submitButton);
 

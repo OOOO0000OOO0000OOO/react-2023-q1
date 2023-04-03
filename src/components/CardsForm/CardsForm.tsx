@@ -31,6 +31,7 @@ const CardForm: React.FC<CardFormProps> = ({ onSubmit }) => {
     <form
       onSubmit={handleSubmit(onFormSubmit)}
       className={styles.formContainer}
+      data-testid="card-form"
     >
       <UserInput
         register={register}

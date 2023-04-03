@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import UserCard from './UserCard';
 
@@ -10,20 +10,10 @@ const mockUserCard = {
   attack: 'Poison Powder',
   consent: true,
   type: 'trainer',
-  image: new File(['image'], 'image.png', { type: 'image/png' }),
+  image: '',
 } as const;
 
 describe('UserCard component', () => {
-  const { createObjectURL } = global.URL;
-
-  beforeAll(() => {
-    global.URL.createObjectURL = vi.fn(() => 'image.png');
-  });
-
-  afterAll(() => {
-    global.URL.createObjectURL = createObjectURL;
-  });
-
   it('should be in the document', () => {
     render(<UserCard {...mockUserCard} />);
 
@@ -33,9 +23,8 @@ describe('UserCard component', () => {
   it('should render the user card data', () => {
     const { getByRole, getByText } = render(<UserCard {...mockUserCard} />);
 
-    expect(getByRole('img').getAttribute('src')).toBe('image.png');
-
-    expect(getByRole('heading').textContent).toBe(mockUserCard.name);
+    expect(getByRole('img')).toHaveAttribute('src', '');
+    expect(getByRole('heading')).toHaveTextContent(mockUserCard.name);
 
     expect(getByText(mockUserCard.type)).toBeInTheDocument();
     expect(getByText(mockUserCard.date)).toBeInTheDocument();

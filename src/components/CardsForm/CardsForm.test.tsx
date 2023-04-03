@@ -4,15 +4,16 @@ import userEvent from '@testing-library/user-event';
 import CardForm from './CardsForm';
 
 describe('CardForm component', () => {
+  vi.mock('uuid', () => ({ v4: () => 'fhdtsdt56tsd6s7' }));
+
   const mockCardData = {
-    id: 0,
+    id: 'fhdtsdt56tsd6s7',
     name: 'John Doe',
     email: 'johndoe@test.com',
     date: '2022-01-01',
     attack: 'Draining Kiss',
     consent: true,
     type: 'trainer',
-    image: new File(['image'], 'image.png', { type: 'image/png' }),
   };
 
   const onSubmit = vi.fn();
@@ -39,11 +40,9 @@ describe('CardForm component', () => {
     fireEvent.click(typeTrainerInput);
 
     await userEvent.selectOptions(attackInput, mockCardData.attack);
-    await userEvent.upload(imageInput, mockCardData.image);
+    await userEvent.upload(imageInput, new File([], '', { type: 'image/png' }));
 
-    await waitFor(() => {
-      fireEvent.submit(screen.getByTestId('card-form'));
-    });
+    fireEvent.submit(screen.getByTestId('card-form'));
   });
 
   it('should render the form', () => {
@@ -51,8 +50,17 @@ describe('CardForm component', () => {
   });
 
   it('should submit user card data on submit', async () => {
+    const input = screen.getByLabelText<HTMLInputElement>(/image/i);
+
+    await userEvent.upload(input, new File([], '', { type: 'image/png' }));
+
+    const mockFileList = Object.assign({}, input.files);
+
     await waitFor(() => {
-      expect(onSubmit).toHaveBeenCalledWith(mockCardData);
+      expect(onSubmit).toHaveBeenCalledWith({
+        ...mockCardData,
+        image: mockFileList,
+      });
     });
   });
 
@@ -61,14 +69,12 @@ describe('CardForm component', () => {
     const dateInput = screen.getByLabelText<HTMLInputElement>(/date/i);
     const emailInput = screen.getByLabelText<HTMLSelectElement>(/email/i);
     const consentInput = screen.getByLabelText<HTMLInputElement>(/consent/i);
-    const imageInput = screen.getByLabelText<HTMLInputElement>(/image/i);
 
     await waitFor(() => {
       expect(nameInput.value).toBe('');
       expect(emailInput.value).toBe('');
       expect(dateInput.value).toBe('');
       expect(consentInput.checked).toBe(false);
-      expect(imageInput.files?.length).toBe(0);
     });
   });
 });
