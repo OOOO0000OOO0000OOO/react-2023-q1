@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { attacks, types, UserCardData } from '../../models/UserCardData';
 import { TypeInput, UserInput, UserSelect } from './inputs';
+import { registerOptions } from '../../utils';
 import styles from './CardsForm.module.css';
 import { useForm } from 'react-hook-form';
 
@@ -36,55 +37,34 @@ const CardForm: React.FC<CardFormProps> = ({ onSubmit }) => {
       <UserInput
         register={register}
         name="name"
-        options={{
-          required: 'name required',
-          minLength: {
-            value: 3,
-            message: 'name must contain at least 3 characters',
-          },
-        }}
+        options={registerOptions.name}
         error={errors?.name}
       ></UserInput>
       <UserInput
         register={register}
         name="email"
-        options={{
-          required: 'email required',
-          pattern: /\S+@\S+\.\S+/i,
-        }}
+        options={registerOptions.email}
         error={errors?.email}
       ></UserInput>
       <UserInput
         register={register}
         name="date"
         type="date"
-        options={{
-          required: 'date required',
-        }}
+        options={registerOptions.date}
         error={errors?.date}
       ></UserInput>
       <UserSelect
         name="attack"
         register={register}
         options={attacks}
-        regOptions={{
-          required: 'attack required',
-          validate: (value) =>
-            (value && attacks.includes(value as (typeof attacks)[number])) ||
-            'choose the attack from the list',
-        }}
+        regOptions={registerOptions.attack}
         error={errors?.attack}
       />
       <TypeInput
         name="type"
         register={register}
         types={types}
-        options={{
-          required: 'type required',
-          validate: (value) =>
-            (value && types.includes(value as (typeof types)[number])) ||
-            'select one of the given types',
-        }}
+        options={registerOptions.type}
         error={errors?.type}
       />
       <UserInput
@@ -92,14 +72,7 @@ const CardForm: React.FC<CardFormProps> = ({ onSubmit }) => {
         name="image"
         type="file"
         accept="image/*"
-        options={{
-          required: 'image required',
-          validate: (fileList) =>
-            (fileList instanceof FileList &&
-              fileList[0] &&
-              /image/.test(fileList[0].type)) ||
-            'invalid image format',
-        }}
+        options={registerOptions.image}
         error={errors?.image}
       />
       <UserInput
@@ -107,9 +80,7 @@ const CardForm: React.FC<CardFormProps> = ({ onSubmit }) => {
         register={register}
         name="consent"
         type="checkbox"
-        options={{
-          required: 'consent required',
-        }}
+        options={registerOptions.consent}
         error={errors?.consent}
       />
       <button type="submit">Submit</button>
