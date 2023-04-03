@@ -13,7 +13,7 @@ const mockUserCards: UserCardData[] = [
     attack: 'Draining Kiss',
     consent: true,
     type: 'pokemon',
-    image: new File(['image'], 'image.png'),
+    image: '',
   } as const,
   {
     id: 2,
@@ -23,7 +23,7 @@ const mockUserCards: UserCardData[] = [
     attack: 'Psychic Removal',
     consent: true,
     type: 'energy',
-    image: new File(['image'], 'image.png'),
+    image: '',
   } as const,
 ];
 
