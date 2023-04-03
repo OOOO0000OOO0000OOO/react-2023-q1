@@ -1,31 +1,22 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { UserCardList, CardsForm } from '../../components';
 import { UserCardData } from '../../models/UserCardData';
 import styles from './CardsFormPage.module.css';
 
-interface State {
-  cards: UserCardData[];
-}
-export default class CardsFormPage extends Component {
-  state: State = {
-    cards: [],
+const CardsFormPage = () => {
+  const [cards, setCards] = useState<UserCardData[]>([]);
+
+  const addCard = (card: UserCardData) => {
+    setCards((prevCards) => [...prevCards, card]);
   };
 
-  private addCard = (card: UserCardData) => {
-    this.setState(({ cards }: State) => ({
-      cards: [...cards, card],
-    }));
-  };
+  return (
+    <div className={styles.formContainer}>
+      <h3 className={styles.heading}>Create Your Own Poke Cards</h3>
+      <CardsForm onSubmit={addCard} />
+      <UserCardList cards={cards} />
+    </div>
+  );
+};
 
-  render() {
-    const { cards } = this.state;
-
-    return (
-      <div className={styles.formContainer}>
-        <h3 className={styles.heading}>Create Your Own Poke Cards</h3>
-        <CardsForm onSubmit={this.addCard} />
-        <UserCardList cards={cards} />
-      </div>
-    );
-  }
-}
+export default CardsFormPage;
