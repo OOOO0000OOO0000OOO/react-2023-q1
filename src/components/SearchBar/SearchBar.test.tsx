@@ -5,7 +5,8 @@ import SearchBar from './SearchBar';
 
 describe('SearchBar', () => {
   const onSearch = vi.fn();
-  const props = { onSearch, searchQuery: '' };
+  const onChange = vi.fn();
+  const props = { onSearch, onChange, searchQuery: '' };
 
   it('should render an input and a button', () => {
     const { getByRole } = render(<SearchBar {...props} />);
