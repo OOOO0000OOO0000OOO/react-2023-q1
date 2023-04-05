@@ -1,18 +1,13 @@
 import React from 'react';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { render } from '@testing-library/react';
 import TypeInput from './TypeInput';
 
-const mockRefs = {
-  pokemon: React.createRef<HTMLInputElement>(),
-  trainer: React.createRef<HTMLInputElement>(),
-  energy: React.createRef<HTMLInputElement>(),
-};
-
+const mockRefs = ['pokemon', 'trainer', 'energy'] as const;
 describe('TypeInput component', () => {
   it('renders correctly with expected props', () => {
     const { getByLabelText, getByText } = render(
-      <TypeInput label="type:" types={mockRefs} defaultChecked="pokemon" />
+      <TypeInput name="type" register={vi.fn()} types={mockRefs} options={{}} />
     );
 
     expect(getByText(/type:/i)).toBeInTheDocument();
@@ -20,7 +15,5 @@ describe('TypeInput component', () => {
     expect(getByLabelText('pokemon')).toBeInTheDocument();
     expect(getByLabelText('trainer')).toBeInTheDocument();
     expect(getByLabelText('energy')).toBeInTheDocument();
-
-    expect(getByLabelText('pokemon')).toHaveAttribute('checked');
   });
 });

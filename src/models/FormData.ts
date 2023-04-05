@@ -5,6 +5,7 @@ export const formFields = [
   'image',
   'consent',
   'email',
+  'type',
 ] as const;
 
 export type FormFields = (typeof formFields)[number];

@@ -1,39 +1,36 @@
-import React, { Component, ChangeEvent, FormEvent } from 'react';
+import React, { useState } from 'react';
+import styles from './SearchBar.module.css';
 
 interface Props {
   searchQuery: string;
   onSearch: (searchQuery: string) => void;
+  onChange: (searchQuery: string) => void;
 }
 
-interface State {
-  searchQuery: string;
-}
+const SearchBar: React.FC<Props> = ({ searchQuery, onSearch, onChange }) => {
+  const [query, setQuery] = useState(searchQuery);
 
-export default class SearchBar extends Component<Props, State> {
-  state: State = {
-    searchQuery: this.props.searchQuery,
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value);
+    onChange(e.target.value);
   };
 
-  private onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    this.setState({ searchQuery: e.target.value });
-  };
-
-  private onSubmit = (e: FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    this.props.onSearch(this.state.searchQuery);
+    onSearch(query);
   };
 
-  render() {
-    return (
-      <form onSubmit={this.onSubmit}>
-        <input
-          type="text"
-          value={this.state.searchQuery}
-          onChange={this.onChange}
-          placeholder="search for pokémons..."
-        />
-        <button type="submit">Search</button>
-      </form>
-    );
-  }
-}
+  return (
+    <form className={styles.search} onSubmit={handleSubmit}>
+      <input
+        type="text"
+        value={query}
+        onChange={handleChange}
+        placeholder="search for pokémons..."
+      />
+      <button type="submit">Search</button>
+    </form>
+  );
+};
+
+export default SearchBar;

@@ -1,185 +1,94 @@
-import React, { Component, FormEvent, RefObject } from 'react';
-import {
-  Attack,
-  attacks,
-  Type,
-  types,
-  UserCardData,
-  initialState,
-} from '../../models/UserCardData';
-import { FormFields, formFields } from '../../models/FormData';
-import { Validations, validations } from '../../models/ValidationsData';
-import UserSelect from './UserSelect';
-import TypeInput from './TypeInput';
-import UserInput from './UserInput';
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { v4 as uuidv4 } from 'uuid';
+import { attacks, types, UserCardData } from '../../models';
+import { TypeInput, UserInput, UserSelect } from '../../components';
+import { registerOptions } from '../../utils';
 import styles from './CardsForm.module.css';
 
 interface CardFormProps {
   onSubmit: (value: UserCardData) => void;
 }
 
-interface CardFormState {
-  userCardData: UserCardData;
-  errors: { [K in FormFields]?: string };
-  submission: boolean;
-}
+const CardForm: React.FC<CardFormProps> = ({ onSubmit }) => {
+  const [isSubmission, setIsSubmission] = useState(false);
 
-class CardForm extends Component<CardFormProps, CardFormState> {
-  private form = React.createRef<HTMLFormElement>();
-  private name = React.createRef<HTMLInputElement>();
-  private date = React.createRef<HTMLInputElement>();
-  private attack = React.createRef<HTMLSelectElement>();
-  private consent = React.createRef<HTMLInputElement>();
-  private type = {
-    pokemon: React.createRef<HTMLInputElement>(),
-    trainer: React.createRef<HTMLInputElement>(),
-    energy: React.createRef<HTMLInputElement>(),
-  };
-  private image: RefObject<HTMLInputElement> = React.createRef();
-  private email: RefObject<HTMLInputElement> = React.createRef();
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    reset,
+  } = useForm<UserCardData>({ mode: 'onBlur' });
 
-  readonly state: CardFormState = {
-    userCardData: initialState,
-    errors: {},
-    submission: false,
+  const onFormSubmit = (value: UserCardData) => {
+    setIsSubmission(true);
+    setTimeout(setIsSubmission, 3000, false);
+
+    onSubmit({ ...value, image: Object.assign({}, value.image), id: uuidv4() });
+    reset();
   };
 
-  private resetState = (): void => {
-    const { id } = this.state.userCardData;
-
-    this.setState({
-      userCardData: {
-        ...initialState,
-        id: id + 1,
-      },
-      errors: {},
-    });
-  };
-
-  private updateState = async (): Promise<void> => {
-    const { id } = this.state.userCardData;
-
-    this.setState({
-      userCardData: {
-        id,
-        email: this.email.current?.value || '',
-        name: this.name.current?.value || '',
-        date: this.date.current?.value || '',
-        attack: this.attack.current?.value as Attack,
-        consent: this.consent.current?.checked || false,
-        type: this.type[
-          types.find((type) => this.type[type]?.current?.checked) || 'pokemon'
-        ]?.current?.value as Type,
-        image: this.image.current?.files?.[0] || '',
-      },
-    });
-
-    await this.validate(validations);
-  };
-
-  private validate = async (validations: {
-    [K in FormFields]: Validations;
-  }): Promise<void> => {
-    for (const field of formFields) {
-      const { required, custom } = validations[field];
-      const { errors } = this.state;
-
-      await this.setState({
-        errors: {
-          ...errors,
-          [field]: !required.isValid(this[field].current)
-            ? required.message
-            : custom && !custom.isValid(this[field].current)
-            ? custom.message
-            : undefined,
-        },
-      });
-    }
-  };
-
-  private handleSubmit = async (event: FormEvent): Promise<void> => {
-    event.preventDefault();
-
-    await this.updateState();
-
-    const { onSubmit } = this.props;
-    const { userCardData, errors } = this.state;
-
-    const submission = !Object.values(errors).find(Boolean);
-
-    if (submission) {
-      onSubmit(userCardData);
-
-      this.form.current?.reset();
-      this.resetState();
-
-      if (this.image.current) this.image.current.value = '';
-    }
-
-    this.setState({ submission });
-  };
-
-  render() {
-    const { errors, submission } = this.state;
-
-    return (
-      <form
-        data-testid="card-form"
-        ref={this.form}
-        onSubmit={this.handleSubmit}
-        className={styles.formContainer}
-      >
-        <UserInput
-          label="name:"
-          errors={errors}
-          name="name"
-          inputRef={this.name}
-        />
-        <UserInput
-          label="email:"
-          errors={errors}
-          name="email"
-          inputRef={this.email}
-        />
-        <UserInput
-          label="date:"
-          type="date"
-          errors={errors}
-          name="date"
-          inputRef={this.date}
-        />
-        <UserSelect label="attack:" options={attacks} selectRef={this.attack} />
-        <TypeInput
-          label="type:"
-          types={{
-            pokemon: this.type.pokemon,
-            trainer: this.type.trainer,
-            energy: this.type.energy,
-          }}
-          defaultChecked="pokemon"
-        />
-        <UserInput
-          label="image:"
-          type="file"
-          accept="image/*"
-          errors={errors}
-          name="image"
-          inputRef={this.image}
-        />
-        <UserInput
-          label="I consent to my personal data:"
-          type="checkbox"
-          errors={errors}
-          name="consent"
-          inputRef={this.consent}
-        />
-        <button type="submit">Submit</button>
-        {submission && (
-          <span className={styles.message}>successfully submitted!</span>
-        )}
-      </form>
-    );
-  }
-}
+  return (
+    <form
+      onSubmit={handleSubmit(onFormSubmit)}
+      className={styles.formContainer}
+      data-testid="card-form"
+    >
+      <UserInput
+        register={register}
+        name="name"
+        options={registerOptions.name}
+        error={errors?.name}
+      ></UserInput>
+      <UserInput
+        register={register}
+        name="email"
+        options={registerOptions.email}
+        error={errors?.email}
+      ></UserInput>
+      <UserInput
+        register={register}
+        name="date"
+        type="date"
+        options={registerOptions.date}
+        error={errors?.date}
+      ></UserInput>
+      <UserSelect
+        name="attack"
+        register={register}
+        options={attacks}
+        regOptions={registerOptions.attack}
+        error={errors?.attack}
+      />
+      <TypeInput
+        name="type"
+        register={register}
+        types={types}
+        options={registerOptions.type}
+        error={errors?.type}
+      />
+      <UserInput
+        register={register}
+        name="image"
+        type="file"
+        accept="image/*"
+        options={registerOptions.image}
+        error={errors?.image}
+      />
+      <UserInput
+        label="I consent to my personal data"
+        register={register}
+        name="consent"
+        type="checkbox"
+        options={registerOptions.consent}
+        error={errors?.consent}
+      />
+      <button type="submit">Submit</button>
+      {isSubmission && (
+        <span className={styles.message}>successfully submitted!</span>
+      )}
+    </form>
+  );
+};
 
 export default CardForm;

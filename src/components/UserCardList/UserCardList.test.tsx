@@ -1,8 +1,8 @@
 import React from 'react';
 import { describe, it, expect, vi } from 'vitest';
 import { render } from '@testing-library/react';
-import UserCardsList from './UserCardList';
-import { UserCardData } from '../../models/UserCardData';
+import { UserCardData } from '../../models';
+import UserCardList from './UserCardList';
 
 const mockUserCards: UserCardData[] = [
   {
@@ -13,7 +13,7 @@ const mockUserCards: UserCardData[] = [
     attack: 'Draining Kiss',
     consent: true,
     type: 'pokemon',
-    image: new File(['image'], 'image.png'),
+    image: '',
   } as const,
   {
     id: 2,
@@ -23,11 +23,11 @@ const mockUserCards: UserCardData[] = [
     attack: 'Psychic Removal',
     consent: true,
     type: 'energy',
-    image: new File(['image'], 'image.png'),
+    image: '',
   } as const,
 ];
 
-describe('UserCardsList component', () => {
+describe('UserCardList  component', () => {
   const { createObjectURL } = global.URL;
 
   beforeAll(() => {
@@ -39,7 +39,7 @@ describe('UserCardsList component', () => {
   });
 
   it('should render list of usercards correctly', () => {
-    const { getByText } = render(<UserCardsList cards={mockUserCards} />);
+    const { getByText } = render(<UserCardList cards={mockUserCards} />);
 
     expect(getByText('UserCard One')).toBeInTheDocument();
     expect(getByText('UserCard Two')).toBeInTheDocument();

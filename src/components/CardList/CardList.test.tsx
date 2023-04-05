@@ -1,8 +1,8 @@
 import React from 'react';
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import CardsList from './CardList';
-import { CardData } from '../../models/CardData';
+import CardList from './CardList';
+import { CardData } from '../../models';
 
 const mockCards: CardData[] = [
   {
@@ -21,10 +21,10 @@ const mockCards: CardData[] = [
   },
 ];
 
-describe('CardsList component', () => {
+describe('CardList  component', () => {
   it('should render list of cards correctly', () => {
     const { getByText } = render(
-      <CardsList cards={mockCards} searchQuery="" error={null} />
+      <CardList cards={mockCards} searchQuery="" error={null} />
     );
 
     expect(getByText('Card One')).toBeInTheDocument();
@@ -33,7 +33,7 @@ describe('CardsList component', () => {
 
   it('should filter cards based on search query', () => {
     const { getByText, queryByText } = render(
-      <CardsList cards={mockCards} searchQuery="one" error={null} />
+      <CardList cards={mockCards} searchQuery="one" error={null} />
     );
 
     expect(getByText('Card One')).toBeInTheDocument();
@@ -42,7 +42,7 @@ describe('CardsList component', () => {
 
   it('should render error message when error prop is provided', () => {
     const error = new Error('Network Error');
-    render(<CardsList cards={[]} searchQuery="" error={error} />);
+    render(<CardList cards={[]} searchQuery="" error={error} />);
 
     expect(screen.getByTestId('error')).toBeInTheDocument();
     expect(screen.getByTestId('error').textContent).toEqual(

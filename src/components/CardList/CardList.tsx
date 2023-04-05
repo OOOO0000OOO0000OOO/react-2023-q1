@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import Card from '../Card/Card';
-import { CardData } from '../../models/CardData';
+import React from 'react';
+import { Card } from '../../components';
+import { CardData } from '../../models';
 import styles from './CardList.module.css';
 
 interface Props {
@@ -9,22 +9,20 @@ interface Props {
   error: Error | null;
 }
 
-export default class CardsList extends Component<Props> {
-  render() {
-    const { cards, searchQuery, error } = this.props;
+const CardList: React.FC<Props> = ({ cards, searchQuery, error }) => {
+  return (
+    <div className={styles.cardList}>
+      {error ? (
+        <div data-testid="error">Error: {error.message}</div>
+      ) : (
+        cards
+          .filter((card) =>
+            card.name.toLowerCase().includes(searchQuery.toLowerCase())
+          )
+          .map((card) => <Card key={card.id} {...card} />)
+      )}
+    </div>
+  );
+};
 
-    return (
-      <div className={styles.cardList}>
-        {error ? (
-          <div data-testid="error">Error: {error.message}</div>
-        ) : (
-          cards
-            .filter((card: CardData) =>
-              card.name.toLowerCase().includes(searchQuery.toLowerCase())
-            )
-            .map((card: CardData) => <Card key={card.id} {...card} />)
-        )}
-      </div>
-    );
-  }
-}
+export default CardList;
