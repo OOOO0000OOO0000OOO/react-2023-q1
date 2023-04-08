@@ -1,3 +1,3 @@
-export * from './CardData';
+export * from './CharacterData';
 export * from './FormData';
 export * from './UserCardData';
