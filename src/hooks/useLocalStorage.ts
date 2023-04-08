@@ -4,16 +4,16 @@ export const useLocalStorage = (
   key: string
 ): [string, React.Dispatch<React.SetStateAction<string>>] => {
   const [item, setItem] = useState(localStorage.getItem(key) || '');
-  const prev = useRef(item);
+  const itemRef = useRef(item);
 
   useEffect(() => {
     return () => {
-      localStorage.setItem(key, prev.current);
+      localStorage.setItem(key, itemRef.current);
     };
   }, [key]);
 
   useEffect(() => {
-    prev.current = item;
+    itemRef.current = item;
   }, [item]);
 
   return [item, setItem];
