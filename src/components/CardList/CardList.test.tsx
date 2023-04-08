@@ -1,48 +1,63 @@
 import React from 'react';
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { CardData } from 'models';
+import { Character } from 'models';
 import { CardList } from 'components';
 
-const mockCards: CardData[] = [
+const mockCards: Character[] = [
   {
-    id: '1',
+    type: '',
+    url: 'https://example.com/api/character/1',
+    created: '2018-04-15T20:31:46.065Z',
+    id: 1,
     name: 'Card One',
-    supertype: 'This is card one',
-    imageUrl: 'https://www.example.com/image1.png',
-    types: [],
+    status: 'Dead',
+    species: 'One',
+    gender: 'Male',
+    origin: {
+      name: 'Earth',
+      url: 'https://example.com/api/location/1',
+    },
+    location: {
+      name: 'Earth',
+      url: 'https://example.com/api/location/1',
+    },
+    image: 'https://example.com/api/image/1.jpeg',
+    episode: ['https://example.com/api/episode/1'],
   },
   {
-    id: '2',
+    type: '',
+    url: 'https://example.com/api/character/2',
+    created: '2018-04-15T21:34:21.911Z',
+    id: 2,
     name: 'Card Two',
-    supertype: 'This is card two',
-    imageUrl: 'https://www.example.com/image2.png',
-    types: [],
+    status: 'Alive',
+    species: 'Two',
+    gender: 'Female',
+    origin: {
+      name: 'Abadango',
+      url: 'https://example.com/api/location/2',
+    },
+    location: {
+      name: 'Abadango',
+      url: 'https://example.com/api/location/2',
+    },
+    image: 'https://example.com/api/image/2.jpeg',
+    episode: ['https://example.com/api/episode/2'],
   },
 ];
 
 describe('CardList  component', () => {
   it('should render list of cards correctly', () => {
-    const { getByText } = render(
-      <CardList cards={mockCards} searchQuery="" error={null} />
-    );
+    const { getByText } = render(<CardList cards={mockCards} error={null} />);
 
     expect(getByText('Card One')).toBeInTheDocument();
     expect(getByText('Card Two')).toBeInTheDocument();
   });
 
-  it('should filter cards based on search query', () => {
-    const { getByText, queryByText } = render(
-      <CardList cards={mockCards} searchQuery="one" error={null} />
-    );
-
-    expect(getByText('Card One')).toBeInTheDocument();
-    expect(queryByText('Card Two')).toBeNull();
-  });
-
   it('should render error message when error prop is provided', () => {
     const error = new Error('Network Error');
-    render(<CardList cards={[]} searchQuery="" error={error} />);
+    render(<CardList cards={[]} error={error} />);
 
     expect(screen.getByTestId('error')).toBeInTheDocument();
     expect(screen.getByTestId('error').textContent).toEqual(
