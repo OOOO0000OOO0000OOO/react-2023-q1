@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import { Character, CharacterFilter, Info } from '../models';
+import { Character, CharacterFilter, Info } from 'models';
 import { baseURL } from '../constants';
 
 class CharacterService {

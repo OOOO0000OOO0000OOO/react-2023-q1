@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
-import { attacks, types, UserCardData } from '../../models';
-import { TypeInput, UserInput, UserSelect } from '../../components';
-import { registerOptions } from '../../utils';
+import { attacks, types, UserCardData } from 'models';
+import { TypeInput, UserInput, UserSelect } from 'components';
+import { registerOptions } from 'utils';
 import styles from './CardsForm.module.css';
 
 interface CardFormProps {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Character } from '../../models';
+import { Character } from 'models';
 import styles from './Card.module.css';
 
 const Card: React.FC<Character> = ({ name, image, status, species }) => {

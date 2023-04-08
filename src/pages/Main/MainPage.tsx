@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { CardList, SearchBar } from '../../components';
-import { characterService } from '../../services';
-import { useLocalStorage, useService } from '../../hooks';
+import { CardList, SearchBar } from 'components';
+import { characterService } from 'services';
+import { useLocalStorage, useService } from 'hooks';
 import styles from './MainPage.module.css';
 
 const MainPage = () => {

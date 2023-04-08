@@ -1,6 +1,6 @@
 import React from 'react';
-import { Card } from '../../components';
-import { Character } from '../../models';
+import { Card } from 'components';
+import { Character } from 'models';
 import styles from './CardList.module.css';
 
 interface Props {

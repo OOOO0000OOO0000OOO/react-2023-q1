@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
-import CardsFormPage from './CardsFormPage';
+import { CardsFormPage } from 'pages';
 
 describe('CardsFormPage', () => {
   const { createObjectURL } = global.URL;

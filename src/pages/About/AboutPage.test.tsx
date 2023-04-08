@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render } from '@testing-library/react';
-import AboutPage from './AboutPage';
+import { AboutPage } from 'pages';
 
 describe('AboutPage Component', () => {
   it('should render an h3 tag with about us text', () => {

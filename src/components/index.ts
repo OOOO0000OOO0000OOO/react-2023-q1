@@ -1,6 +1,6 @@
 import Card from './Card/Card';
 import CardList from './CardList/CardList';
-import CardsForm from './CardsForm/CardsForm';
+import CardForm from './CardsForm/CardsForm';
 import Header from './Header/Header';
 import Layout from './Layout/Layout';
 import SearchBar from './SearchBar/SearchBar';
@@ -10,7 +10,7 @@ export * from './UI';
 export {
   Card,
   CardList,
-  CardsForm,
+  CardForm,
   Header,
   Layout,
   SearchBar,

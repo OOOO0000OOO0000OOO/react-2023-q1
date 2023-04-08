@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { Header, Layout } from './components';
-import { MainPage, AboutPage, NotFoundPage, CardsFormPage } from './pages';
+import { Header, Layout } from 'components';
+import { MainPage, AboutPage, NotFoundPage, CardsFormPage } from 'pages';
 import './App.css';
 
 function App() {

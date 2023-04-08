@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import CardForm from './CardsForm';
+import { CardForm } from 'components';
 
 describe('CardForm component', () => {
   vi.mock('uuid', () => ({ v4: () => 'fhdtsdt56tsd6s7' }));

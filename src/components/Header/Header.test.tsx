@@ -2,7 +2,7 @@ import React from 'react';
 import { describe, it, expect } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import Header from './Header';
+import { Header } from 'components';
 
 describe('Header component', () => {
   it('should render the correct links with the correct styles', () => {
