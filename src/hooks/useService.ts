@@ -3,9 +3,9 @@ import { useState } from 'react';
 import { useMountOnce } from './useMountOnce';
 
 export const useService = <T, V>(
-  service: (params: T) => Promise<AxiosResponse<V>>,
+  service: (params?: T) => Promise<AxiosResponse<V>>,
   initialData: V,
-  params: T
+  params?: T
 ) => {
   const [data, setData] = useState<V>(initialData);
   const [loading, setLoading] = useState(false);
