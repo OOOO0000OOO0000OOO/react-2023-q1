@@ -1,25 +1,20 @@
 import React from 'react';
 import { Card } from '../../components';
-import { CardData } from '../../models';
+import { Character } from '../../models';
 import styles from './CardList.module.css';
 
 interface Props {
-  cards: CardData[];
-  searchQuery: string;
+  cards: Character[];
   error: Error | null;
 }
 
-const CardList: React.FC<Props> = ({ cards, searchQuery, error }) => {
+const CardList: React.FC<Props> = ({ cards, error }) => {
   return (
     <div className={styles.cardList}>
       {error ? (
         <div data-testid="error">Error: {error.message}</div>
       ) : (
-        cards
-          .filter((card) =>
-            card.name.toLowerCase().includes(searchQuery.toLowerCase())
-          )
-          .map((card) => <Card key={card.id} {...card} />)
+        cards.map((card) => <Card key={card.id} {...card} />)
       )}
     </div>
   );

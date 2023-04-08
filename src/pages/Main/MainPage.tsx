@@ -1,27 +1,29 @@
 import React, { useState } from 'react';
 import { CardList, SearchBar } from '../../components';
-import { useCards } from '../../api/cards';
-import { useLocalStorage } from '../../hooks';
+import { characterService } from '../../services';
+import { useLocalStorage, useService } from '../../hooks';
 import styles from './MainPage.module.css';
 
 const MainPage = () => {
   const [enterQuery, setEnterQuery] = useLocalStorage('search');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [, setSearchQuery] = useState('');
+
+  const { getCharacters } = characterService;
 
   const {
-    data: { cards },
+    data: { results },
     error,
-  } = useCards();
+  } = useService(getCharacters, {});
 
   return (
     <div className={styles.mainContainer}>
-      <h3 className={styles.heading}>Pokémon Cards</h3>
+      <h3 className={styles.heading}>Rick and Morty</h3>
       <SearchBar
         searchQuery={enterQuery}
         onSearch={setSearchQuery}
         onChange={setEnterQuery}
       />
-      <CardList searchQuery={searchQuery} cards={cards} error={error} />
+      <CardList cards={results ?? []} error={error} />
     </div>
   );
 };
