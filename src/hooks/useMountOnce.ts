@@ -1,15 +1,13 @@
 import { useEffect, useLayoutEffect, useRef } from 'react';
 
-export const useMountOnce = (callback: () => void) => {
+export const useMountOnce = <T>(callback: () => void, dep?: T) => {
   const callbackRef = useRef(callback);
-  const shouldCall = useRef(true);
 
   useLayoutEffect(() => {
     callbackRef.current = callback;
   }, [callback]);
 
   useEffect(() => {
-    if (shouldCall.current) callbackRef.current();
-    shouldCall.current = false;
-  }, []);
+    callbackRef.current();
+  }, [dep]);
 };

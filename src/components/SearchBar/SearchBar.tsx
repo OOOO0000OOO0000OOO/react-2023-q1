@@ -3,16 +3,14 @@ import styles from './SearchBar.module.css';
 
 interface Props {
   searchQuery: string;
-  onSearch: (searchQuery: string) => void;
-  onChange: (searchQuery: string) => void;
+  onSearch: (query: string) => void;
 }
 
-const SearchBar: React.FC<Props> = ({ searchQuery, onSearch, onChange }) => {
+const SearchBar: React.FC<Props> = ({ searchQuery, onSearch }) => {
   const [query, setQuery] = useState(searchQuery);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
-    onChange(e.target.value);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {

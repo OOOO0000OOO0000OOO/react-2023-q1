@@ -8,6 +8,7 @@ class CharacterService {
   constructor(baseURL: string) {
     this.api = axios.create({
       baseURL,
+      validateStatus: (status) => status === 200 || status === 404,
     });
   }
 

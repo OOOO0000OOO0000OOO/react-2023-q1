@@ -50,7 +50,6 @@ const mockCards: Character[] = [
 describe('CardList  component', () => {
   it('should render list of cards correctly', () => {
     const { getByText } = render(<CardList cards={mockCards} error={null} />);
-
     expect(getByText('Card One')).toBeInTheDocument();
     expect(getByText('Card Two')).toBeInTheDocument();
   });
@@ -58,10 +57,19 @@ describe('CardList  component', () => {
   it('should render error message when error prop is provided', () => {
     const error = new Error('Network Error');
     render(<CardList cards={[]} error={error} />);
-
-    expect(screen.getByTestId('error')).toBeInTheDocument();
     expect(screen.getByTestId('error').textContent).toEqual(
       `Error: ${error.message}`
     );
+  });
+
+  it('should render a loader when loading prop is provided', () => {
+    render(<CardList cards={mockCards} loading />);
+    expect(screen.getByTestId('loader')).toBeInTheDocument();
+  });
+
+  it('should render the NotFoundPage when notFound prop is provided', () => {
+    const error = 'There is nothing here';
+    render(<CardList cards={[]} notFound={error} />);
+    expect(screen.getByText(/nothing was found/i)).toBeInTheDocument();
   });
 });
