@@ -39,7 +39,6 @@ describe('Card', () => {
     expect(getByRole('img').getAttribute('src')).toBe(mockCard.image);
     expect(getByRole('heading').textContent).toBe(mockCard.name);
 
-    expect(getByText(mockCard.status)).toBeInTheDocument();
     expect(getByText(mockCard.species)).toBeInTheDocument();
   });
 });

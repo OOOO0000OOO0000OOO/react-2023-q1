@@ -13,6 +13,7 @@ const MainPage = () => {
   const {
     data: { results },
     error,
+    loading,
   } = useService(getCharacters, {});
 
   return (
@@ -23,7 +24,7 @@ const MainPage = () => {
         onSearch={setSearchQuery}
         onChange={setEnterQuery}
       />
-      <CardList cards={results ?? []} error={error} />
+      <CardList cards={results ?? []} error={error} loading={loading} />
     </div>
   );
 };
