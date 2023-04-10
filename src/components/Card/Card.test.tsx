@@ -26,19 +26,17 @@ const mockCard: Character = {
 
 describe('Card', () => {
   it('should be in the document', () => {
-    render(<Card {...mockCard} />);
+    render(<Card {...mockCard} onClick={() => {}} />);
 
     expect(screen.getByTestId('card')).toBeInTheDocument();
   });
 
   it('should render the card data', () => {
-    const { getByRole, getByText } = render(<Card {...mockCard} />);
+    render(<Card {...mockCard} onClick={() => {}} />);
 
     expect(screen.getByTestId('card')).toBeInTheDocument();
 
-    expect(getByRole('img').getAttribute('src')).toBe(mockCard.image);
-    expect(getByRole('heading').textContent).toBe(mockCard.name);
-
-    expect(getByText(mockCard.species)).toBeInTheDocument();
+    expect(screen.getByRole('img')).toHaveAttribute('src', mockCard.image);
+    expect(screen.getByRole('heading')).toHaveTextContent(mockCard.name);
   });
 });

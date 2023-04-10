@@ -1,6 +1,6 @@
 import React from 'react';
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { Character } from 'models';
 import { CardList } from 'components';
 
@@ -48,28 +48,42 @@ const mockCards: Character[] = [
 ];
 
 describe('CardList  component', () => {
+  const onModalOpen = vi.fn();
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
   it('should render list of cards correctly', () => {
-    const { getByText } = render(<CardList cards={mockCards} error={null} />);
+    const { getByText } = render(
+      <CardList cards={mockCards} error={null} onModalOpen={onModalOpen} />
+    );
     expect(getByText('Card One')).toBeInTheDocument();
     expect(getByText('Card Two')).toBeInTheDocument();
   });
 
   it('should render error message when error prop is provided', () => {
     const error = new Error('Network Error');
-    render(<CardList cards={[]} error={error} />);
+    render(<CardList cards={[]} error={error} onModalOpen={onModalOpen} />);
     expect(screen.getByTestId('error').textContent).toEqual(
       `Error: ${error.message}`
     );
   });
 
   it('should render a loader when loading prop is provided', () => {
-    render(<CardList cards={mockCards} loading />);
+    render(<CardList cards={mockCards} loading onModalOpen={onModalOpen} />);
     expect(screen.getByTestId('loader')).toBeInTheDocument();
   });
 
   it('should render the NotFoundPage when notFound prop is provided', () => {
     const error = 'There is nothing here';
-    render(<CardList cards={[]} notFound={error} />);
+    render(<CardList cards={[]} notFound={error} onModalOpen={vi.fn()} />);
     expect(screen.getByText(/nothing was found/i)).toBeInTheDocument();
+  });
+
+  it('should call onModalOpen with id on Card click', () => {
+    render(<CardList cards={mockCards} onModalOpen={onModalOpen} />);
+    fireEvent.click(screen.getByText('Card Two'));
+    expect(onModalOpen).toHaveBeenCalledWith(2);
   });
 });
