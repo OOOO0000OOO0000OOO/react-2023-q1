@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, CardList, SearchBar } from 'components';
+import { CardList, SearchBar } from 'components';
 import { characterService } from 'services';
 import { useLocalStorage, useService } from 'hooks';
 import styles from './MainPage.module.css';
