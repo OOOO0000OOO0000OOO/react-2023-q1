@@ -7,6 +7,9 @@ import Layout from './Layout/Layout';
 import SearchBar from './SearchBar/SearchBar';
 import UserCard from './UserCard/UserCard';
 import UserCardList from './UserCardList/UserCardList';
+import Modal from './Modal/Modal';
+import ModalCard from './ModalCard/ModalCard';
+import ModalCardLoader from './ModalCardLoader/ModalCardLoader';
 export * from './UI';
 export {
   Card,
@@ -15,6 +18,9 @@ export {
   CardForm,
   Header,
   Layout,
+  Modal,
+  ModalCard,
+  ModalCardLoader,
   SearchBar,
   UserCard,
   UserCardList,

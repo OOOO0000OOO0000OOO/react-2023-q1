@@ -1,7 +1,7 @@
 import React from 'react';
 import { describe, it, expect, vi } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
-import Modal from './Modal';
+import { Modal } from 'components';
 
 describe('Modal component', () => {
   const onClose = vi.fn();

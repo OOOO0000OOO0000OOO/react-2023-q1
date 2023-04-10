@@ -1,7 +1,7 @@
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import { baseURL } from '../constants';
-import { characters, characterNotFound, character1 } from './data';
+import { characters, characterNotFound, character1 } from 'mocks/data';
 
 export const server = setupServer(
   rest.get(baseURL, (req, res, ctx) => {

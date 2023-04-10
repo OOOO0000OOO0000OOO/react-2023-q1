@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import ModalCard from './ModalCard';
+import { ModalCard } from 'components';
 import { server } from 'mocks/server';
 import { character1 } from 'mocks/data';
 

@@ -1,10 +1,10 @@
-import { useService } from 'hooks';
-import { Character } from 'models';
 import React from 'react';
+import { Character } from 'models';
+import { useService } from 'hooks';
 import { characterService } from 'services';
-import styles from './ModalCard.module.css';
+import { ModalCardLoader } from 'components';
 import { NotFoundPage } from 'pages';
-import ModalCardLoader from 'components/ModalCardLoader/ModalCardLoader';
+import styles from './ModalCard.module.css';
 
 const ModalCard: React.FC<{ id: Character['id'] }> = ({ id }) => {
   const { getCharacter } = characterService;
