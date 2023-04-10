@@ -1,7 +1,15 @@
 .card {
-  width: 150px;
+  width: 170px;
+  padding: 10px;
   line-height: 100%;
   min-height: 210px;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+  background-color: #fafafa;
+}
+
+.card:hover {
+  box-shadow: 0px 0px 5px 5px rgba(90, 141, 139, 0.1);
 }
 
 .image {

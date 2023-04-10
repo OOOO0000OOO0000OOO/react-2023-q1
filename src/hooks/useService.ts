@@ -11,7 +11,7 @@ export const useService = <T, V>({
   service: (params?: T) => Promise<AxiosResponse<V>>;
   initialData: V;
   params?: T;
-  deps?: T[keyof T];
+  deps?: T[keyof T] | T;
 }) => {
   const [data, setData] = useState<V>(initialData);
   const [loading, setLoading] = useState(false);

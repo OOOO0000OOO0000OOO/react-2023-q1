@@ -10,9 +10,16 @@ interface Props {
   error?: Error | null;
   loading?: boolean;
   notFound?: string;
+  onModalOpen: (id: Character['id']) => void;
 }
 
-const CardList: React.FC<Props> = ({ cards, error, loading, notFound }) => {
+const CardList: React.FC<Props> = ({
+  cards,
+  error,
+  loading,
+  notFound,
+  onModalOpen,
+}) => {
   if (loading)
     return (
       <div data-testid="loader" className={styles.cardListLoading}>
@@ -36,7 +43,7 @@ const CardList: React.FC<Props> = ({ cards, error, loading, notFound }) => {
   return (
     <div className={styles.cardList}>
       {cards.map((card) => (
-        <Card key={card.id} {...card} />
+        <Card key={card.id} {...card} onClick={() => onModalOpen(card.id)} />
       ))}
     </div>
   );

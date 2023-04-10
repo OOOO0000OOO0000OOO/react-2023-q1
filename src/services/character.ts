@@ -12,8 +12,8 @@ class CharacterService {
     });
   }
 
-  getCharacter = (id: number) => {
-    return this.api<Character>(`${id}`);
+  getCharacter = (id?: number) => {
+    return this.api<Character>(`${id ?? ''}`);
   };
 
   getCharacters = (filters?: CharacterFilter) => {
