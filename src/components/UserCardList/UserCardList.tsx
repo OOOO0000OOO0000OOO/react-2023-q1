@@ -1,6 +1,6 @@
 import React from 'react';
-import UserCard from '../UserCard/UserCard';
-import { UserCardData } from '../../models';
+import { UserCard } from 'components';
+import { UserCardData } from 'models';
 import styles from './UserCardList.module.css';
 
 interface Props {

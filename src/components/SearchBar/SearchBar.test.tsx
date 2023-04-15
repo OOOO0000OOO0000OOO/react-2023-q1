@@ -1,7 +1,7 @@
 import React from 'react';
 import { describe, it, expect, vi } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
-import SearchBar from './SearchBar';
+import { SearchBar } from 'components';
 
 describe('SearchBar', () => {
   const onSearch = vi.fn();

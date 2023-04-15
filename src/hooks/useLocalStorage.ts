@@ -1,20 +1,13 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 
 export const useLocalStorage = (
   key: string
 ): [string, React.Dispatch<React.SetStateAction<string>>] => {
   const [item, setItem] = useState(localStorage.getItem(key) || '');
-  const prev = useRef(item);
 
   useEffect(() => {
-    return () => {
-      localStorage.setItem(key, prev.current);
-    };
-  }, [key]);
-
-  useEffect(() => {
-    prev.current = item;
-  }, [item]);
+    localStorage.setItem(key, item);
+  }, [key, item]);
 
   return [item, setItem];
 };

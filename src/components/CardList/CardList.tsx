@@ -1,26 +1,50 @@
 import React from 'react';
-import { Card } from '../../components';
-import { CardData } from '../../models';
+import { Card, CardLoader } from 'components';
+import { Character } from 'models';
 import styles from './CardList.module.css';
+import 'react-loading-skeleton/dist/skeleton.css';
+import { NotFoundPage } from 'pages';
 
 interface Props {
-  cards: CardData[];
-  searchQuery: string;
-  error: Error | null;
+  cards: Character[];
+  error?: Error | null;
+  loading?: boolean;
+  notFound?: string;
+  onModalOpen: (id: Character['id']) => void;
 }
 
-const CardList: React.FC<Props> = ({ cards, searchQuery, error }) => {
+const CardList: React.FC<Props> = ({
+  cards,
+  error,
+  loading,
+  notFound,
+  onModalOpen,
+}) => {
+  if (loading)
+    return (
+      <div data-testid="loader" className={styles.cardListLoading}>
+        <span className={styles.message}>progressing...</span>
+        <CardLoader count={20} />
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className={styles.cardListLoading}>
+        <div data-testid="error" className={styles.message}>
+          Error: {error.message}
+        </div>
+        <CardLoader count={20} />
+      </div>
+    );
+
+  if (notFound) return <NotFoundPage />;
+
   return (
     <div className={styles.cardList}>
-      {error ? (
-        <div data-testid="error">Error: {error.message}</div>
-      ) : (
-        cards
-          .filter((card) =>
-            card.name.toLowerCase().includes(searchQuery.toLowerCase())
-          )
-          .map((card) => <Card key={card.id} {...card} />)
-      )}
+      {cards.map((card) => (
+        <Card key={card.id} {...card} onClick={() => onModalOpen(card.id)} />
+      ))}
     </div>
   );
 };

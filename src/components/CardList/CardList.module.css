@@ -5,3 +5,20 @@
   grid-gap: 10px;
   justify-content: space-between;
 }
+
+.cardListLoading {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 170px);
+  grid-gap: 10px;
+  justify-content: space-between;
+  height: 430px;
+  overflow-y: clip;
+}
+
+.message {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  z-index: 5;
+}

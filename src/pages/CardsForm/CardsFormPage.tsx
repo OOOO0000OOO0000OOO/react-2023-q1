@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { UserCardData } from '../../models';
-import { UserCardList, CardsForm } from '../../components';
+import { UserCardData } from 'models';
+import { UserCardList, CardForm } from 'components';
 import styles from './CardsFormPage.module.css';
 
 const CardsFormPage = () => {
@@ -13,7 +13,7 @@ const CardsFormPage = () => {
   return (
     <div className={styles.formContainer}>
       <h3 className={styles.heading}>Create Your Own Poke Cards</h3>
-      <CardsForm onSubmit={addCard} />
+      <CardForm onSubmit={addCard} />
       <UserCardList cards={cards} />
     </div>
   );

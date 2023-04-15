@@ -1,52 +1,89 @@
 import React from 'react';
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import CardList from './CardList';
-import { CardData } from '../../models';
+import { describe, it, expect, vi } from 'vitest';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { Character } from 'models';
+import { CardList } from 'components';
 
-const mockCards: CardData[] = [
+const mockCards: Character[] = [
   {
-    id: '1',
+    type: '',
+    url: 'https://example.com/api/character/1',
+    created: '2018-04-15T20:31:46.065Z',
+    id: 1,
     name: 'Card One',
-    supertype: 'This is card one',
-    imageUrl: 'https://www.example.com/image1.png',
-    types: [],
+    status: 'Dead',
+    species: 'One',
+    gender: 'Male',
+    origin: {
+      name: 'Earth',
+      url: 'https://example.com/api/location/1',
+    },
+    location: {
+      name: 'Earth',
+      url: 'https://example.com/api/location/1',
+    },
+    image: 'https://example.com/api/image/1.jpeg',
+    episode: ['https://example.com/api/episode/1'],
   },
   {
-    id: '2',
+    type: '',
+    url: 'https://example.com/api/character/2',
+    created: '2018-04-15T21:34:21.911Z',
+    id: 2,
     name: 'Card Two',
-    supertype: 'This is card two',
-    imageUrl: 'https://www.example.com/image2.png',
-    types: [],
+    status: 'Alive',
+    species: 'Two',
+    gender: 'Female',
+    origin: {
+      name: 'Abadango',
+      url: 'https://example.com/api/location/2',
+    },
+    location: {
+      name: 'Abadango',
+      url: 'https://example.com/api/location/2',
+    },
+    image: 'https://example.com/api/image/2.jpeg',
+    episode: ['https://example.com/api/episode/2'],
   },
 ];
 
 describe('CardList  component', () => {
+  const onModalOpen = vi.fn();
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
   it('should render list of cards correctly', () => {
     const { getByText } = render(
-      <CardList cards={mockCards} searchQuery="" error={null} />
+      <CardList cards={mockCards} error={null} onModalOpen={onModalOpen} />
     );
-
     expect(getByText('Card One')).toBeInTheDocument();
     expect(getByText('Card Two')).toBeInTheDocument();
   });
 
-  it('should filter cards based on search query', () => {
-    const { getByText, queryByText } = render(
-      <CardList cards={mockCards} searchQuery="one" error={null} />
-    );
-
-    expect(getByText('Card One')).toBeInTheDocument();
-    expect(queryByText('Card Two')).toBeNull();
-  });
-
   it('should render error message when error prop is provided', () => {
     const error = new Error('Network Error');
-    render(<CardList cards={[]} searchQuery="" error={error} />);
-
-    expect(screen.getByTestId('error')).toBeInTheDocument();
+    render(<CardList cards={[]} error={error} onModalOpen={onModalOpen} />);
     expect(screen.getByTestId('error').textContent).toEqual(
       `Error: ${error.message}`
     );
+  });
+
+  it('should render a loader when loading prop is provided', () => {
+    render(<CardList cards={mockCards} loading onModalOpen={onModalOpen} />);
+    expect(screen.getByTestId('loader')).toBeInTheDocument();
+  });
+
+  it('should render the NotFoundPage when notFound prop is provided', () => {
+    const error = 'There is nothing here';
+    render(<CardList cards={[]} notFound={error} onModalOpen={vi.fn()} />);
+    expect(screen.getByText(/nothing was found/i)).toBeInTheDocument();
+  });
+
+  it('should call onModalOpen with id on Card click', () => {
+    render(<CardList cards={mockCards} onModalOpen={onModalOpen} />);
+    fireEvent.click(screen.getByText('Card Two'));
+    expect(onModalOpen).toHaveBeenCalledWith(2);
   });
 });

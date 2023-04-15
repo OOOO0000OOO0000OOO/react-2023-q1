@@ -1,14 +1,16 @@
 import React from 'react';
-import { CardData } from '../../models';
+import { Character } from 'models';
 import styles from './Card.module.css';
 
-const Card: React.FC<CardData> = ({ imageUrl, name, types, supertype }) => {
+const Card: React.FC<Character & { onClick: () => void }> = ({
+  name,
+  image,
+  onClick,
+}) => {
   return (
-    <div data-testid="card" className={styles.card}>
-      <img src={imageUrl} alt={name} className={styles.image}></img>
+    <div data-testid="card" className={styles.card} onClick={onClick}>
+      <img src={image} alt={name} className={styles.image}></img>
       <h3>{name}</h3>
-      <span>{supertype}</span>
-      {types && <div data-testid="types">{types.join(' · ')}</div>}
     </div>
   );
 };

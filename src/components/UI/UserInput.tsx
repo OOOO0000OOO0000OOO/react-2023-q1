@@ -1,6 +1,6 @@
 import React from 'react';
 import { RegisterOptions, UseFormRegister } from 'react-hook-form';
-import { UserCardData, FormFields } from '../../models';
+import { UserCardData, FormFields } from 'models';
 import styles from './Input.module.css';
 
 interface Props {

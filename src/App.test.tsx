@@ -1,28 +1,8 @@
 import React from 'react';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import App from './App';
-
-const mockCardsData = [
-  {
-    id: 'xy7-54',
-    name: 'Pikachu',
-    imageUrl: 'https://images.pokemontcg.io/xy7/54.png',
-    subtype: 'Basic',
-    supertype: 'Pokémon',
-    hp: '70',
-    ability: {
-      name: 'Lightning Rod',
-      text: 'Whenever your opponent attaches an Energy card from their hand to 1 of their Pokémon, you may draw 2 cards.',
-      type: 'Ability',
-    },
-  },
-];
-
-global.fetch = vi.fn().mockResolvedValue({
-  json: vi.fn().mockResolvedValue({ cards: mockCardsData }),
-});
 
 describe('App', () => {
   it('renders header', () => {
@@ -43,7 +23,7 @@ describe('App', () => {
       </MemoryRouter>
     );
 
-    const mainPageElement = getByText(/pokémon cards/i);
+    const mainPageElement = getByText(/rick and morty/i);
     expect(mainPageElement).toBeInTheDocument();
   });
 

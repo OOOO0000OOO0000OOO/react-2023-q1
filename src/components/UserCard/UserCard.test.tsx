@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import UserCard from './UserCard';
+import { UserCard } from 'components';
 
 const mockUserCard = {
   id: 10,

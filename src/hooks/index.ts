@@ -1,2 +1,2 @@
-export * from './useFetch';
+export * from './useService';
 export * from './useLocalStorage';
