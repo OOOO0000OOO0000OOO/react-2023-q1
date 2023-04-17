@@ -3,13 +3,20 @@ import { describe, it, expect } from 'vitest';
 import { ModalCard } from 'components';
 import { server } from 'mocks/server';
 import { character1 } from 'mocks/data';
+import { Provider } from 'react-redux';
+import { store } from 'store';
 
 describe('ModalCard component', () => {
   beforeAll(() => server.listen());
+  afterEach(() => server.resetHandlers());
   afterAll(() => server.close());
 
   it('displays loading skeleton when data is being fetched', async () => {
-    render(<ModalCard id={1} />);
+    render(
+      <Provider store={store}>
+        <ModalCard id={1} />
+      </Provider>
+    );
 
     expect(screen.getByTestId('loader')).toBeInTheDocument();
 
@@ -18,18 +25,23 @@ describe('ModalCard component', () => {
     });
   });
 
-  it('displays error message when an error occurs', async () => {
-    render(<ModalCard id={2} />);
-
+  it('displays 404 when an error occurs', async () => {
+    render(
+      <Provider store={store}>
+        <ModalCard id={2} />
+      </Provider>
+    );
     await waitFor(() => {
-      expect(screen.getByTestId('error')).toHaveTextContent(
-        `Error: Request failed with status code 500`
-      );
+      expect(screen.getByTestId('404')).toBeInTheDocument();
     });
   });
 
   it('displays character information when data is successfully fetched', async () => {
-    render(<ModalCard id={1} />);
+    render(
+      <Provider store={store}>
+        <ModalCard id={1} />
+      </Provider>
+    );
 
     await waitFor(() => {
       expect(screen.getByText(character1.name)).toBeInTheDocument();
@@ -59,7 +71,11 @@ describe('ModalCard component', () => {
   });
 
   it('displays not found page when character id is not valid', async () => {
-    render(<ModalCard id={-1} />);
+    render(
+      <Provider store={store}>
+        <ModalCard id={-1} />
+      </Provider>
+    );
 
     await waitFor(() => {
       expect(screen.getByTestId('404')).toBeInTheDocument();

@@ -1,34 +1,14 @@
 import React from 'react';
 import { Character } from 'models';
-import { useService } from 'hooks';
-import { characterService } from 'services';
 import { ModalCardLoader } from 'components';
 import { NotFoundPage } from 'pages';
 import styles from './ModalCard.module.css';
+import { useGetCharacterByIdQuery } from 'store/api';
 
 const ModalCard: React.FC<{ id: Character['id'] }> = ({ id }) => {
-  const { getCharacter } = characterService;
+  const { data, isFetching, isError } = useGetCharacterByIdQuery(id);
 
-  const { data, loading, error } = useService({
-    service: getCharacter,
-    initialData: {} as Character,
-    params: id,
-    deps: id,
-  });
-
-  const {
-    name,
-    status,
-    species,
-    gender,
-    origin,
-    location,
-    image,
-    episode,
-    error: notFound,
-  } = data;
-
-  if (loading)
+  if (isFetching)
     return (
       <div data-testid="loader" className={styles.cardLoading}>
         <ModalCardLoader />
@@ -36,17 +16,10 @@ const ModalCard: React.FC<{ id: Character['id'] }> = ({ id }) => {
       </div>
     );
 
-  if (error)
-    return (
-      <div className={styles.cardLoading}>
-        <ModalCardLoader />
-        <div data-testid="error" className={styles.message}>
-          Error: {error.message}
-        </div>
-      </div>
-    );
+  if (isError || !data) return <NotFoundPage />;
 
-  if (notFound) return <NotFoundPage />;
+  const { name, status, species, gender, origin, location, image, episode } =
+    data;
 
   return (
     <div className={styles.content}>

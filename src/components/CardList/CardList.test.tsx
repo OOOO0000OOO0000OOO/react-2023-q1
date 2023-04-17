@@ -1,89 +1,37 @@
 import React from 'react';
-import { describe, it, expect, vi } from 'vitest';
-import { fireEvent, render, screen } from '@testing-library/react';
-import { Character } from 'models';
+import { describe, it, expect } from 'vitest';
+import { render, screen, waitFor } from '@testing-library/react';
+import { Provider } from 'react-redux';
+import { store } from 'store';
 import { CardList } from 'components';
+import { character1, character2, invalidName } from 'mocks/data';
+import { server } from 'mocks/server';
 
-const mockCards: Character[] = [
-  {
-    type: '',
-    url: 'https://example.com/api/character/1',
-    created: '2018-04-15T20:31:46.065Z',
-    id: 1,
-    name: 'Card One',
-    status: 'Dead',
-    species: 'One',
-    gender: 'Male',
-    origin: {
-      name: 'Earth',
-      url: 'https://example.com/api/location/1',
-    },
-    location: {
-      name: 'Earth',
-      url: 'https://example.com/api/location/1',
-    },
-    image: 'https://example.com/api/image/1.jpeg',
-    episode: ['https://example.com/api/episode/1'],
-  },
-  {
-    type: '',
-    url: 'https://example.com/api/character/2',
-    created: '2018-04-15T21:34:21.911Z',
-    id: 2,
-    name: 'Card Two',
-    status: 'Alive',
-    species: 'Two',
-    gender: 'Female',
-    origin: {
-      name: 'Abadango',
-      url: 'https://example.com/api/location/2',
-    },
-    location: {
-      name: 'Abadango',
-      url: 'https://example.com/api/location/2',
-    },
-    image: 'https://example.com/api/image/2.jpeg',
-    episode: ['https://example.com/api/episode/2'],
-  },
-];
+describe('CardList component', () => {
+  beforeAll(() => server.listen());
+  afterEach(() => server.resetHandlers());
+  afterAll(() => server.close());
 
-describe('CardList  component', () => {
-  const onModalOpen = vi.fn();
-
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
-
-  it('should render list of cards correctly', () => {
-    const { getByText } = render(
-      <CardList cards={mockCards} error={null} onModalOpen={onModalOpen} />
+  it('should render list of cards correctly', async () => {
+    render(
+      <Provider store={store}>
+        <CardList name="" />
+      </Provider>
     );
-    expect(getByText('Card One')).toBeInTheDocument();
-    expect(getByText('Card Two')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText(character1.name)).toBeInTheDocument();
+      expect(screen.getByText(character2.name)).toBeInTheDocument();
+    });
   });
 
-  it('should render error message when error prop is provided', () => {
-    const error = new Error('Network Error');
-    render(<CardList cards={[]} error={error} onModalOpen={onModalOpen} />);
-    expect(screen.getByTestId('error').textContent).toEqual(
-      `Error: ${error.message}`
+  it('should render 404 when invalid name is provided', async () => {
+    render(
+      <Provider store={store}>
+        <CardList name={invalidName} />
+      </Provider>
     );
-  });
-
-  it('should render a loader when loading prop is provided', () => {
-    render(<CardList cards={mockCards} loading onModalOpen={onModalOpen} />);
-    expect(screen.getByTestId('loader')).toBeInTheDocument();
-  });
-
-  it('should render the NotFoundPage when notFound prop is provided', () => {
-    const error = 'There is nothing here';
-    render(<CardList cards={[]} notFound={error} onModalOpen={vi.fn()} />);
-    expect(screen.getByText(/nothing was found/i)).toBeInTheDocument();
-  });
-
-  it('should call onModalOpen with id on Card click', () => {
-    render(<CardList cards={mockCards} onModalOpen={onModalOpen} />);
-    fireEvent.click(screen.getByText('Card Two'));
-    expect(onModalOpen).toHaveBeenCalledWith(2);
+    await waitFor(() => {
+      expect(screen.getByTestId('404'));
+    });
   });
 });

@@ -28,7 +28,7 @@ export interface UserCardData {
   date?: string;
   attack?: Attack;
   type?: Type;
-  image?: FileList | '';
+  image?: FileList | string;
   consent?: boolean;
 }
 

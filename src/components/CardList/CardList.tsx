@@ -1,26 +1,30 @@
-import React from 'react';
-import { Card, CardLoader } from 'components';
+import React, { useState } from 'react';
 import { Character } from 'models';
+import { useGetCharactersQuery } from 'store/api';
+import { Card, CardLoader, Modal, ModalCard } from 'components';
+import { NotFoundPage } from 'pages';
 import styles from './CardList.module.css';
 import 'react-loading-skeleton/dist/skeleton.css';
-import { NotFoundPage } from 'pages';
 
 interface Props {
-  cards: Character[];
-  error?: Error | null;
-  loading?: boolean;
-  notFound?: string;
-  onModalOpen: (id: Character['id']) => void;
+  name: string;
 }
 
-const CardList: React.FC<Props> = ({
-  cards,
-  error,
-  loading,
-  notFound,
-  onModalOpen,
-}) => {
-  if (loading)
+const CardList: React.FC<Props> = ({ name }) => {
+  const {
+    data: { results: cards = [] } = {
+      cards: [],
+    },
+    isFetching,
+    isError,
+  } = useGetCharactersQuery({ name });
+
+  const [id, setId] = useState<number | null>(null);
+
+  const onModalOpen = (id: number) => setId(id);
+  const onModalClose = () => setId(null);
+
+  if (isFetching)
     return (
       <div data-testid="loader" className={styles.cardListLoading}>
         <span className={styles.message}>progressing...</span>
@@ -28,23 +32,18 @@ const CardList: React.FC<Props> = ({
       </div>
     );
 
-  if (error)
-    return (
-      <div className={styles.cardListLoading}>
-        <div data-testid="error" className={styles.message}>
-          Error: {error.message}
-        </div>
-        <CardLoader count={20} />
-      </div>
-    );
-
-  if (notFound) return <NotFoundPage />;
+  if (isError || !cards?.length) return <NotFoundPage />;
 
   return (
     <div className={styles.cardList}>
-      {cards.map((card) => (
-        <Card key={card.id} {...card} onClick={() => onModalOpen(card.id)} />
+      {cards.map((card: Character) => (
+        <Card key={card.id} {...card} showCard={onModalOpen} />
       ))}
+      {id && (
+        <Modal onClose={onModalClose}>
+          <ModalCard id={id} />
+        </Modal>
+      )}
     </div>
   );
 };
