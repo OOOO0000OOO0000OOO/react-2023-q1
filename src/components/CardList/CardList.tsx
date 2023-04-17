@@ -15,7 +15,8 @@ const CardList: React.FC<Props> = ({ name }) => {
     data: { results: cards = [] } = {
       cards: [],
     },
-    isLoading,
+    isFetching,
+    isError,
   } = useGetCharactersQuery({ name });
 
   const [id, setId] = useState<number | null>(null);
@@ -23,7 +24,7 @@ const CardList: React.FC<Props> = ({ name }) => {
   const onModalOpen = (id: number) => setId(id);
   const onModalClose = () => setId(null);
 
-  if (isLoading)
+  if (isFetching)
     return (
       <div data-testid="loader" className={styles.cardListLoading}>
         <span className={styles.message}>progressing...</span>
@@ -31,21 +32,20 @@ const CardList: React.FC<Props> = ({ name }) => {
       </div>
     );
 
-  if (cards.length)
-    return (
-      <div className={styles.cardList}>
-        {cards.map((card: Character) => (
-          <Card key={card.id} {...card} showCard={onModalOpen} />
-        ))}
-        {id && (
-          <Modal onClose={onModalClose}>
-            <ModalCard id={id} />
-          </Modal>
-        )}
-      </div>
-    );
+  if (isError || !cards?.length) return <NotFoundPage />;
 
-  return <NotFoundPage />;
+  return (
+    <div className={styles.cardList}>
+      {cards.map((card: Character) => (
+        <Card key={card.id} {...card} showCard={onModalOpen} />
+      ))}
+      {id && (
+        <Modal onClose={onModalClose}>
+          <ModalCard id={id} />
+        </Modal>
+      )}
+    </div>
+  );
 };
 
 export default CardList;

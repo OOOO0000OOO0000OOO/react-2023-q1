@@ -6,9 +6,9 @@ import styles from './ModalCard.module.css';
 import { useGetCharacterByIdQuery } from 'store/api';
 
 const ModalCard: React.FC<{ id: Character['id'] }> = ({ id }) => {
-  const { data, isLoading } = useGetCharacterByIdQuery(id);
+  const { data, isFetching, isError } = useGetCharacterByIdQuery(id);
 
-  if (isLoading)
+  if (isFetching)
     return (
       <div data-testid="loader" className={styles.cardLoading}>
         <ModalCardLoader />
@@ -16,29 +16,27 @@ const ModalCard: React.FC<{ id: Character['id'] }> = ({ id }) => {
       </div>
     );
 
-  if (data) {
-    const { name, status, species, gender, origin, location, image, episode } =
-      data;
+  if (isError || !data) return <NotFoundPage />;
 
-    return (
-      <div className={styles.content}>
-        <img src={image} alt={name} className={styles.image}></img>
-        <div className={styles.description}>
-          <h3 className={styles.title}>{name}</h3>
-          <p>status: {status}</p>
-          <p>species: {species}</p>
-          <p>gender: {gender}</p>
-          {origin?.name && <p>origin location: {origin.name}</p>}
-          {location?.name && <p>last known location: {location.name}</p>}
-          {episode?.at(0) && (
-            <p>first appeared in episode: {episode?.at(0)?.match(/\d+$/)}</p>
-          )}
-        </div>
+  const { name, status, species, gender, origin, location, image, episode } =
+    data;
+
+  return (
+    <div className={styles.content}>
+      <img src={image} alt={name} className={styles.image}></img>
+      <div className={styles.description}>
+        <h3 className={styles.title}>{name}</h3>
+        <p>status: {status}</p>
+        <p>species: {species}</p>
+        <p>gender: {gender}</p>
+        {origin?.name && <p>origin location: {origin.name}</p>}
+        {location?.name && <p>last known location: {location.name}</p>}
+        {episode?.at(0) && (
+          <p>first appeared in episode: {episode?.at(0)?.match(/\d+$/)}</p>
+        )}
       </div>
-    );
-  }
-
-  return <NotFoundPage />;
+    </div>
+  );
 };
 
 export default ModalCard;

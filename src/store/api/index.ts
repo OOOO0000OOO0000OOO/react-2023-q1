@@ -6,9 +6,6 @@ export const APISlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
     baseUrl,
-    validateStatus: ({ ok, status }) => {
-      return ok || status === HTTPStatusCodes.NOT_FOUND;
-    },
   }),
   endpoints: (builder) => ({
     getCharacters: builder.query<Info<Character[]>, CharacterFilter>({
