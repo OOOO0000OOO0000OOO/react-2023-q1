@@ -1,19 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { StoreState } from 'store/types';
+import { addCard } from 'store/form';
 import { UserCardData } from 'models';
 import { UserCardList, CardForm } from 'components';
 import styles from './CardsFormPage.module.css';
 
 const CardsFormPage = () => {
-  const [cards, setCards] = useState<UserCardData[]>([]);
+  const cards = useSelector((state: StoreState) => state.form.cards);
+  const dispatch = useDispatch();
 
-  const addCard = (card: UserCardData) => {
-    setCards((prevCards) => [...prevCards, card]);
+  const onSubmit = (card: UserCardData) => {
+    dispatch(addCard(card));
   };
 
   return (
     <div className={styles.formContainer}>
       <h3 className={styles.heading}>Create Your Own Poke Cards</h3>
-      <CardForm onSubmit={addCard} />
+      <CardForm onSubmit={onSubmit} />
       <UserCardList cards={cards} />
     </div>
   );
