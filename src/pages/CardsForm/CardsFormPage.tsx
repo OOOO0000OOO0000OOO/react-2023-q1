@@ -11,7 +11,15 @@ const CardsFormPage = () => {
   const dispatch = useDispatch();
 
   const onSubmit = (card: UserCardData) => {
-    dispatch(addCard(card));
+    dispatch(
+      addCard({
+        ...card,
+        image:
+          card.image && card.image[0] && card.image[0] instanceof File
+            ? URL.createObjectURL(card.image[0])
+            : '',
+      })
+    );
   };
 
   return (

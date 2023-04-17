@@ -7,7 +7,7 @@ const UserCard = ({ name, date, attack, type, image }: UserCardData) => {
     <div data-testid="user-card" className={styles.userCard}>
       <h3>{name}</h3>
       <img
-        src={image && image[0] ? URL.createObjectURL(image[0]) : ''}
+        src={image instanceof FileList ? '' : image}
         alt={name}
         className={styles.userImage}
       ></img>
