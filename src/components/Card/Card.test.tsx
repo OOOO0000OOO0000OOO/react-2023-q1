@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { Character } from 'models';
 import { Card } from 'components';
 
@@ -40,8 +40,10 @@ describe('Card', () => {
     expect(screen.getByRole('heading')).toHaveTextContent(mockCard.name);
   });
 
-  it.todo('should call showData with card id on card click', () => {
+  it('should call showCard with card id on card click', () => {
     const showCard = vi.fn();
     render(<Card {...mockCard} showCard={showCard} />);
+    fireEvent.click(screen.getByTestId('card'));
+    expect(showCard).toBeCalledWith(mockCard.id);
   });
 });
