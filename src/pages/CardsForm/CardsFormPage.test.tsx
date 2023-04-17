@@ -2,6 +2,8 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import { CardsFormPage } from 'pages';
+import { Provider } from 'react-redux';
+import { store } from 'store';
 
 describe('CardsFormPage', () => {
   const { createObjectURL } = global.URL;
@@ -20,17 +22,24 @@ describe('CardsFormPage', () => {
     date: '2022-01-01',
     type: 'trainer',
     attack: 'Draining Kiss',
-    image: new File(['image'], 'image.png', { type: 'image/png' }),
   } as const;
 
   it('should render a UserCardList component', () => {
-    render(<CardsFormPage />);
+    render(
+      <Provider store={store}>
+        <CardsFormPage />
+      </Provider>
+    );
 
     expect(screen.getByTestId('user-cards-list')).toBeInTheDocument();
   });
 
   it('should draw an user card on form submit', async () => {
-    render(<CardsFormPage />);
+    render(
+      <Provider store={store}>
+        <CardsFormPage />
+      </Provider>
+    );
 
     const nameInput = screen.getByLabelText<HTMLInputElement>(/name/i);
     const emailInput = screen.getByLabelText<HTMLInputElement>(/email/i);

@@ -11,28 +11,18 @@ describe('Modal component', () => {
   });
 
   it('should render when isOpen is true', () => {
-    const { getByText } = render(
-      <Modal isOpen={true} onClose={onClose}>
-        Hello World
-      </Modal>
-    );
+    const { getByText } = render(<Modal onClose={onClose}>Hello World</Modal>);
     expect(getByText('Hello World')).toBeInTheDocument();
   });
 
   it('does not render anything when isOpen is false', () => {
-    const { container } = render(
-      <Modal isOpen={false} onClose={onClose}>
-        Hello World
-      </Modal>
-    );
+    const { container } = render(<Modal onClose={onClose}>Hello World</Modal>);
     expect(container.firstChild).toBeNull();
   });
 
   it('calls onClose when the overlay is clicked', () => {
     const { getByTestId } = render(
-      <Modal isOpen={true} onClose={onClose}>
-        Hello World
-      </Modal>
+      <Modal onClose={onClose}>Hello World</Modal>
     );
     fireEvent.click(getByTestId('overlay'));
     expect(onClose).toHaveBeenCalled();
@@ -40,9 +30,7 @@ describe('Modal component', () => {
 
   it('does not call onClose when the modal content is clicked', () => {
     const { getByTestId } = render(
-      <Modal isOpen={true} onClose={onClose}>
-        Hello World
-      </Modal>
+      <Modal onClose={onClose}>Hello World</Modal>
     );
     fireEvent.click(getByTestId('modal'));
     expect(onClose).not.toHaveBeenCalled();

@@ -3,12 +3,16 @@ import { describe, it, expect } from 'vitest';
 import { render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import App from './App';
+import { Provider } from 'react-redux';
+import { store } from 'store';
 
 describe('App', () => {
   it('renders header', () => {
     const { getByRole } = render(
       <MemoryRouter>
-        <App />
+        <Provider store={store}>
+          <App />
+        </Provider>
       </MemoryRouter>
     );
 
@@ -19,7 +23,9 @@ describe('App', () => {
   it('renders main page', () => {
     const { getByText } = render(
       <MemoryRouter initialEntries={['/']}>
-        <App />
+        <Provider store={store}>
+          <App />
+        </Provider>
       </MemoryRouter>
     );
 

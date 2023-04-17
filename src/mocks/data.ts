@@ -64,3 +64,5 @@ export const {
 export const characterNotFound = {
   error: 'Character not found',
 };
+
+export const invalidName = 'dgvch67stcg7dsfvgbdwe7tyd328yb';

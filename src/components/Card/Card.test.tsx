@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { Character } from 'models';
 import { Card } from 'components';
@@ -26,17 +26,22 @@ const mockCard: Character = {
 
 describe('Card', () => {
   it('should be in the document', () => {
-    render(<Card {...mockCard} onClick={() => {}} />);
+    render(<Card {...mockCard} showCard={() => {}} />);
 
     expect(screen.getByTestId('card')).toBeInTheDocument();
   });
 
   it('should render the card data', () => {
-    render(<Card {...mockCard} onClick={() => {}} />);
+    render(<Card {...mockCard} showCard={() => {}} />);
 
     expect(screen.getByTestId('card')).toBeInTheDocument();
 
     expect(screen.getByRole('img')).toHaveAttribute('src', mockCard.image);
     expect(screen.getByRole('heading')).toHaveTextContent(mockCard.name);
+  });
+
+  it.todo('should call showData with card id on card click', () => {
+    const showCard = vi.fn();
+    render(<Card {...mockCard} showCard={showCard} />);
   });
 });
