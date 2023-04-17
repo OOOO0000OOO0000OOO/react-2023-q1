@@ -1,26 +1,24 @@
 import React from 'react';
-import { Card, CardLoader } from 'components';
 import { Character } from 'models';
+import { useGetCharactersQuery } from 'store/api';
+import { Card, CardLoader } from 'components';
+import { NotFoundPage } from 'pages';
 import styles from './CardList.module.css';
 import 'react-loading-skeleton/dist/skeleton.css';
-import { NotFoundPage } from 'pages';
 
 interface Props {
-  cards: Character[];
-  error?: Error | null;
-  loading?: boolean;
-  notFound?: string;
-  onModalOpen: (id: Character['id']) => void;
+  name: string;
 }
 
-const CardList: React.FC<Props> = ({
-  cards,
-  error,
-  loading,
-  notFound,
-  onModalOpen,
-}) => {
-  if (loading)
+const CardList: React.FC<Props> = ({ name }) => {
+  const {
+    data: { results: cards = [] } = {
+      cards: [],
+    },
+    isLoading,
+  } = useGetCharactersQuery({ name });
+
+  if (isLoading)
     return (
       <div data-testid="loader" className={styles.cardListLoading}>
         <span className={styles.message}>progressing...</span>
@@ -28,25 +26,16 @@ const CardList: React.FC<Props> = ({
       </div>
     );
 
-  if (error)
+  if (cards.length)
     return (
-      <div className={styles.cardListLoading}>
-        <div data-testid="error" className={styles.message}>
-          Error: {error.message}
-        </div>
-        <CardLoader count={20} />
+      <div className={styles.cardList}>
+        {cards.map((card: Character) => (
+          <Card key={card.id} {...card} />
+        ))}
       </div>
     );
 
-  if (notFound) return <NotFoundPage />;
-
-  return (
-    <div className={styles.cardList}>
-      {cards.map((card) => (
-        <Card key={card.id} {...card} onClick={() => onModalOpen(card.id)} />
-      ))}
-    </div>
-  );
+  return <NotFoundPage />;
 };
 
 export default CardList;
