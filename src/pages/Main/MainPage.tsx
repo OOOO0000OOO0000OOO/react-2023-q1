@@ -1,16 +1,19 @@
 import React from 'react';
 import { CardList, SearchBar } from 'components';
-import { useLocalStorage } from 'hooks';
+import { useSelector } from 'react-redux';
+
 import styles from './MainPage.module.css';
 
+import { StoreState } from 'store/types';
+
 const MainPage = () => {
-  const [name, setName] = useLocalStorage('search');
+  const name = useSelector((state: StoreState) => state.character.name);
 
   return (
     <React.Fragment>
       <div className={styles.mainContainer}>
         <h3 className={styles.heading}>Rick and Morty</h3>
-        <SearchBar searchQuery={name} onSearch={setName} />
+        <SearchBar searchQuery={name} />
         <CardList name={name} />
       </div>
     </React.Fragment>
