@@ -1,22 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { CardList, SearchBar } from 'components';
 import { useLocalStorage } from 'hooks';
 import styles from './MainPage.module.css';
-import Modal from 'components/Modal/Modal';
-import ModalCard from 'components/ModalCard/ModalCard';
 
 const MainPage = () => {
   const [name, setName] = useLocalStorage('search');
-
-  const [isModalOpen, setIsModalOpen] = useState<{
-    isOpen: boolean;
-    id: -1 | number;
-  }>({ isOpen: false, id: -1 });
-
-  const onModalOpen = (id: number) => setIsModalOpen({ isOpen: true, id });
-  const onModalClose = () => setIsModalOpen({ isOpen: false, id: -1 });
-
-  const { isOpen, id } = isModalOpen;
 
   return (
     <React.Fragment>
@@ -25,9 +13,6 @@ const MainPage = () => {
         <SearchBar searchQuery={name} onSearch={setName} />
         <CardList name={name} />
       </div>
-      <Modal onClose={onModalClose} isOpen={isOpen}>
-        <ModalCard id={id} />
-      </Modal>
     </React.Fragment>
   );
 };
