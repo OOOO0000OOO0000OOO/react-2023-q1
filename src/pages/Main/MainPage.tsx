@@ -4,10 +4,10 @@ import { useSelector } from 'react-redux';
 
 import styles from './MainPage.module.css';
 
-import { StoreState } from 'store/types';
+import { RootState } from 'store/types';
 
 const MainPage = () => {
-  const name = useSelector((state: StoreState) => state.character.name);
+  const name = useSelector((state: RootState) => state.character.name);
 
   return (
     <React.Fragment>

@@ -1,4 +1,8 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import {
+  combineReducers,
+  configureStore,
+  PreloadedState,
+} from '@reduxjs/toolkit';
 import { characterSlice } from 'store/character';
 import { formSlice } from 'store/form';
 import { APISlice } from 'store/api';
@@ -9,8 +13,14 @@ const rootReducer = combineReducers({
   [APISlice.reducerPath]: APISlice.reducer,
 });
 
-export const store = configureStore({
-  reducer: rootReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(APISlice.middleware),
-});
+export type RootState = ReturnType<typeof rootReducer>;
+export type Store = ReturnType<typeof setupStore>;
+export type StoreDispatch = Store['dispatch'];
+
+export const setupStore = (preloadedState?: PreloadedState<RootState>) =>
+  configureStore({
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(APISlice.middleware),
+    preloadedState,
+  });
