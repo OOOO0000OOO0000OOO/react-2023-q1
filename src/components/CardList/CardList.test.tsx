@@ -2,10 +2,12 @@ import React from 'react';
 import { describe, it, expect } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { store } from 'store';
+import { setupStore } from 'store';
 import { CardList } from 'components';
 import { character1, character2, invalidName } from 'mocks/data';
 import { server } from 'mocks/server';
+
+const store = setupStore();
 
 describe('CardList component', () => {
   beforeAll(() => server.listen());

@@ -5,7 +5,9 @@ import { MainPage } from 'pages';
 import { server } from 'mocks/server';
 import { character1 } from 'mocks/data';
 import { Provider } from 'react-redux';
-import { store } from 'store';
+import { setupStore } from 'store';
+
+const store = setupStore();
 
 describe('MainPage', () => {
   beforeAll(() => server.listen());
