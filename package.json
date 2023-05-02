@@ -4,15 +4,17 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --open",
+    "dev:client": "vite --open",
+    "dev:server": "ts-node server.ts",
     "build": "tsc && vite build",
+    "build:client": "vite build --outDir dist/client",
+    "build:server": "vite build --outDir dist/server --ssr src/entry-server.tsx ",
     "preview": "vite preview",
     "precommit": "lint-staged",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "format": "npx prettier --write .",
-    "test": "vitest",
-    "coverage": "vitest run --coverage"
+    "test:unit": "vitest --coverage"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.3",
