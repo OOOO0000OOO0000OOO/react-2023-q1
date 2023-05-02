@@ -1,13 +1,13 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { StoreState } from 'store/types';
+import { RootState } from 'store/types';
 import { addCard } from 'store/form';
 import { UserCardData } from 'models';
 import { UserCardList, CardForm } from 'components';
 import styles from './CardsFormPage.module.css';
 
 const CardsFormPage = () => {
-  const cards = useSelector((state: StoreState) => state.form.cards);
+  const cards = useSelector((state: RootState) => state.form.cards);
   const dispatch = useDispatch();
 
   const onSubmit = (card: UserCardData) => {

@@ -3,7 +3,9 @@ import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import { CardsFormPage } from 'pages';
 import { Provider } from 'react-redux';
-import { store } from 'store';
+import { setupStore } from 'store';
+
+const store = setupStore();
 
 describe('CardsFormPage', () => {
   const { createObjectURL } = global.URL;

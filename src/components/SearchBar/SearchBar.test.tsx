@@ -3,7 +3,9 @@ import { describe, it, expect } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
 import { SearchBar } from 'components';
 import { Provider } from 'react-redux';
-import { store } from 'store';
+import { setupStore } from 'store';
+
+const store = setupStore();
 
 describe('SearchBar', () => {
   it('should render an input with search value', () => {

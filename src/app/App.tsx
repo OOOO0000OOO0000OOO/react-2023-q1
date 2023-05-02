@@ -4,7 +4,7 @@ import { Header, Layout } from 'components';
 import { MainPage, AboutPage, NotFoundPage, CardsFormPage } from 'pages';
 import './App.css';
 
-function App() {
+export function App() {
   return (
     <React.Fragment>
       <Layout>
@@ -19,5 +19,3 @@ function App() {
     </React.Fragment>
   );
 }
-
-export default App;
